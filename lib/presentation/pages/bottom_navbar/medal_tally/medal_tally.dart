@@ -15,71 +15,84 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
 
   int _selectedCompetitionId = 1;
 
-  final List<Map<String, dynamic>> _competitions = [
-    {"id": 1, "label": "Khelo India Water Sports Festival Games 2026"},
-    {"id": 2, "label": "Khelo India Winter Sports Festival Games 2026"},
-    {"id": 3, "label": "Khelo India University Games 2026"},
-  ];
+  final Map<String, dynamic> _medalTallyJson = {
+    "competitions": [
+      {"id": 1, "label": "Khelo India Water Sports Festival Games 2026"},
+      {"id": 2, "label": "Khelo India Winter Sports Festival Games 2026"},
+      {"id": 3, "label": "Khelo India University Games 2026"},
+    ],
+    "rows": [
+      {
+        "rank": 1,
+        "state": "Maharashtra",
+        "stateImage": "assets/images/profile_image.png",
+        "gold": 58,
+        "silver": 27,
+        "bronze": 30,
+        "total": 158,
+      },
+      {
+        "rank": 2,
+        "state": "Haryana",
+        "stateImage": "assets/images/profile_image.png",
+        "gold": 58,
+        "silver": 27,
+        "bronze": 30,
+        "total": 158,
+      },
+      {
+        "rank": 3,
+        "state": "Rajasthan",
+        "stateImage": "assets/images/profile_image.png",
+        "gold": 58,
+        "silver": 27,
+        "bronze": 30,
+        "total": 158,
+      },
+      {
+        "rank": 4,
+        "state": "Haryana",
+        "stateImage": "assets/images/profile_image.png",
+        "gold": 58,
+        "silver": 27,
+        "bronze": 30,
+        "total": 158,
+      },
+      {
+        "rank": 5,
+        "state": "Rajasthan",
+        "stateImage": "assets/images/profile_image.png",
+        "gold": 58,
+        "silver": 27,
+        "bronze": 30,
+        "total": 158,
+      },
+      {
+        "rank": 6,
+        "state": "Haryana",
+        "stateImage": "assets/images/profile_image.png",
+        "gold": 58,
+        "silver": 27,
+        "bronze": 30,
+        "total": 158,
+      },
+      {
+        "rank": 7,
+        "state": "Rajasthan",
+        "stateImage": "assets/images/profile_image.png",
+        "gold": 58,
+        "silver": 27,
+        "bronze": 30,
+        "total": 158,
+      },
+    ],
+  };
 
-  /// Dummy tally data for UI
-  final List<Map<String, dynamic>> _tallyRows = [
-    {
-      "rank": 1,
-      "state": "Maharashtra",
-      "gold": 58,
-      "silver": 27,
-      "bronze": 30,
-      "total": 158,
-    },
-    {
-      "rank": 2,
-      "state": "Haryana",
-      "gold": 58,
-      "silver": 27,
-      "bronze": 30,
-      "total": 158,
-    },
-    {
-      "rank": 3,
-      "state": "Rajasthan",
-      "gold": 58,
-      "silver": 27,
-      "bronze": 30,
-      "total": 158,
-    },
-    {
-      "rank": 4,
-      "state": "Haryana",
-      "gold": 58,
-      "silver": 27,
-      "bronze": 30,
-      "total": 158,
-    },
-    {
-      "rank": 5,
-      "state": "Rajasthan",
-      "gold": 58,
-      "silver": 27,
-      "bronze": 30,
-      "total": 158,
-    },
-    {
-      "rank": 6,
-      "state": "Haryana",
-      "gold": 58,
-      "silver": 27,
-      "bronze": 30,
-      "total": 158,
-    },
-    {
-      "rank": 7,
-      "state": "Rajasthan",
-      "gold": 58,
-      "silver": 27,
-      "bronze": 30,
-      "total": 158,
-    },
-  ];
+  List<Map<String, dynamic>> get _competitions =>
+      (_medalTallyJson["competitions"] as List).cast<Map<String, dynamic>>();
+
+  List<Map<String, dynamic>> get _tallyRows =>
+      (_medalTallyJson["rows"] as List).cast<Map<String, dynamic>>();
 
   @override
   Widget build(BuildContext context) {
@@ -182,16 +195,25 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
                       style: FTextStyle.textSecBlackStylePrimary,
                     ),
                     SizedBox(height: 12.h),
-                    _buildTableHeader(),
-                    SizedBox(height: 10.h),
-                    ListView.separated(
-                      itemCount: _tallyRows.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (_, __) => SizedBox(height: 10.h),
-                      itemBuilder: (_, index) {
-                        final row = _tallyRows[index];
-                        return _buildTallyRow(row);
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final layout = _createTallyLayout(constraints.maxWidth);
+                        return Column(
+                          children: [
+                            _buildTableHeader(layout),
+                            SizedBox(height: 10.h),
+                            ListView.separated(
+                              itemCount: _tallyRows.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              separatorBuilder: (_, __) => SizedBox(height: 10.h),
+                              itemBuilder: (_, index) {
+                                final row = _tallyRows[index];
+                                return _buildTallyRow(row, layout);
+                              },
+                            ),
+                          ],
+                        );
                       },
                     ),
                   ],
@@ -294,9 +316,9 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
       ),
     );
   }
-  Widget _buildTableHeader() {
+  Widget _buildTableHeader(_TallyLayout layout) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: layout.rowPadding, vertical: 10.h),
       decoration: BoxDecoration(
         color:AppColors.whiteOffColors,
         borderRadius: BorderRadius.circular(12.r),
@@ -311,37 +333,42 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
       child: Row(
         children: [
           SizedBox(
-            width: 40.w,
+            width: layout.rankWidth,
             child: Text(
               "Rank",
               style: FTextStyle.chipText,
             ),
           ),
-          SizedBox(
-            width: 100.w,
+          SizedBox(width: layout.rankToIconGap),
+          SizedBox(width: layout.stateIconWidth),
+          SizedBox(width: layout.iconToStateGap),
+          Expanded(
             child: Text(
               "State",
               style: FTextStyle.chipText,
             ),
           ),
-          const Spacer(),
+          SizedBox(width: layout.stateToMedalGap),
           _buildMedalHeaderCircle(
             imagePath: "assets/images/medal_total_gold.png",
             backgroundColor: const Color(0xFFFFF5D6),
+            size: layout.medalIconSize,
           ),
-          SizedBox(width: 16.w),
+          SizedBox(width: layout.medalGap),
           _buildMedalHeaderCircle(
             imagePath: "assets/images/medal_total_silver.png",
             backgroundColor: const Color(0xFFEFF2FF),
+            size: layout.medalIconSize,
           ),
-          SizedBox(width: 16.w),
+          SizedBox(width: layout.medalGap),
           _buildMedalHeaderCircle(
             imagePath: "assets/images/medal_total_bronze.png",
             backgroundColor: const Color(0xFFFFE3D3),
+            size: layout.medalIconSize,
           ),
-          SizedBox(width: 16.w),
+          SizedBox(width: layout.medalGap),
           SizedBox(
-            width: 40.w,
+            width: layout.totalWidth,
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -358,85 +385,118 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
   Widget _buildMedalHeaderCircle({
     required String imagePath,
     required Color backgroundColor,
+    required double size,
   }) {
     return Container(
-      width: 26.w,
-      height: 26.w,
-      // decoration: BoxDecoration(
-      //   shape: BoxShape.circle,
-      //   color: backgroundColor,
-      // ),
+      width: size,
+      height: size,
       alignment: Alignment.center,
       child: Image.asset(
         imagePath,
-        height: 26,
-        width: 26,
+        height: size,
+        width: size,
         fit: BoxFit.contain,
       ),
     );
   }
 
-  Widget _buildTallyRow(Map<String, dynamic> row) {
+  Widget _buildTallyRow(Map<String, dynamic> row, _TallyLayout layout) {
     final int rank = row["rank"] as int;
-    final Color medalColor;
+    final Gradient? cardGradient;
 
     if (rank == 1) {
-      medalColor = const Color(0xFFFFD465);
+      cardGradient = const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [Color(0xFFFEECAC), Color(0xFFFFFFFF)],
+      );
     } else if (rank == 2) {
-      medalColor = const Color(0xFFE0E7FF);
+      cardGradient = const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [Color(0xFFE4E4E4), Color(0xFFFFFFFF)],
+      );
     } else if (rank == 3) {
-      medalColor = const Color(0xFFF0C0A0);
+      cardGradient = const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [Color(0xFFF7D3B8), Color(0xFFFFFFFF)],
+      );
     } else {
-      medalColor = const Color(0xFFEDEDED);
+      cardGradient = null;
     }
 
+    final String? rankImagePath = _getRankImagePath(rank);
+
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+      padding: EdgeInsets.symmetric(horizontal: layout.rowPadding, vertical: 12.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardGradient == null ? Colors.white : null,
+        gradient: cardGradient,
         borderRadius: BorderRadius.circular(18.r),
         border: Border.all(color: AppColors.whiteOffColors,width: 2.0),
 
       ),
       child: Row(
         children: [
-          Container(
-            width: 36.w,
-            height: 36.w,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: medalColor.withOpacity(0.2),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              rank.toString(),
-              style: FTextStyle.cardTileText.copyWith(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-              ),
+          SizedBox(
+            width: layout.rankWidth,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: rankImagePath != null
+                  ? Image.asset(
+                      rankImagePath,
+                      width: layout.rankImageWidth,
+                      height: layout.rankImageHeight,
+                      fit: BoxFit.contain,
+                    )
+                  : Text(
+                      rank.toString(),
+                      style: FTextStyle.cardTileText.copyWith(
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
             ),
           ),
-          SizedBox(width: 10.w),
+          SizedBox(width: layout.rankToIconGap),
+          Image.asset(
+            (row["stateImage"] ?? "assets/images/profile_image.png").toString(),
+            width: layout.stateIconWidth,
+            height: layout.stateIconWidth,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(width: layout.iconToStateGap),
           Expanded(
             child: Text(
               row["state"].toString(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: FTextStyle.cardTileText,
+              style: FTextStyle.cardTileText.copyWith(
+                fontFamily: "Montserrat",
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w600,
+                height: 1.13,
+                letterSpacing: 0,
+              ),
             ),
           ),
-          SizedBox(width: 10.w),
-          _buildCountText(row["gold"] as int),
-          SizedBox(width: 16.w),
-          _buildCountText(row["silver"] as int),
-          SizedBox(width: 16.w),
-          _buildCountText(row["bronze"] as int),
-          SizedBox(width: 16.w),
+          SizedBox(width: layout.stateToMedalGap),
+          _buildCountText(row["gold"] as int, width: layout.countWidth),
+          SizedBox(width: layout.medalGap),
+          _buildCountText(row["silver"] as int, width: layout.countWidth),
+          SizedBox(width: layout.medalGap),
+          _buildCountText(row["bronze"] as int, width: layout.countWidth),
+          SizedBox(width: layout.medalGap),
           SizedBox(
-            width: 30.w,
+            width: layout.totalWidth,
             child: Align(
               alignment: Alignment.centerRight,
-              child: _buildCountText(row["total"] as int, isBold: true),
+              child: _buildCountText(
+                row["total"] as int,
+                isBold: true,
+                width: layout.totalWidth,
+              ),
             ),
           ),
         ],
@@ -444,17 +504,62 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
     );
   }
 
-  Widget _buildCountText(int value, {bool isBold = false}) {
+  Widget _buildCountText(
+    int value, {
+    bool isBold = false,
+    required double width,
+  }) {
     return SizedBox(
-      width: 29.w,
+      width: width,
       child: Text(
         value.toString(),
         textAlign: TextAlign.center,
         style: FTextStyle.datePicker.copyWith(
-          fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
+          fontFamily: "Montserrat",
+          fontSize: 13.sp,
+          fontWeight: isBold ? FontWeight.w700 : FontWeight.w600,
+          height: 1.13,
+          letterSpacing: 0,
         ),
       ),
     );
+  }
+
+  _TallyLayout _createTallyLayout(double maxWidth) {
+    final double rankWidth = (maxWidth * 0.08).clamp(24.0, 36.w);
+    final double rankToIconGap = (maxWidth * 0.012).clamp(2.0, 6.w);
+    final double stateIconWidth = (maxWidth * 0.07).clamp(18.0, 26.w);
+    final double iconToStateGap = (maxWidth * 0.012).clamp(4.0, 8.w);
+    final double stateToMedalGap = (maxWidth * 0.012).clamp(4.0, 6.w);
+    final double medalGap = (maxWidth * 0.016).clamp(5.0, 10.w);
+    final double countWidth = (maxWidth * 0.07).clamp(18.0, 26.w);
+    final double totalWidth = (maxWidth * 0.075).clamp(20.0, 28.w);
+    final double rowPadding = (maxWidth * 0.025).clamp(8.0, 12.w);
+    final double medalIconSize = (maxWidth * 0.07).clamp(20.0, 26.w);
+    final double rankImageWidth = (maxWidth * 0.055).clamp(16.0, 20.w);
+    final double rankImageHeight = (maxWidth * 0.065).clamp(18.0, 23.w);
+
+    return _TallyLayout(
+      rankWidth: rankWidth,
+      rankToIconGap: rankToIconGap,
+      stateIconWidth: stateIconWidth,
+      iconToStateGap: iconToStateGap,
+      stateToMedalGap: stateToMedalGap,
+      medalGap: medalGap,
+      countWidth: countWidth,
+      totalWidth: totalWidth,
+      rowPadding: rowPadding,
+      medalIconSize: medalIconSize,
+      rankImageWidth: rankImageWidth,
+      rankImageHeight: rankImageHeight,
+    );
+  }
+
+  String? _getRankImagePath(int rank) {
+    if (rank == 1) return "assets/images/medal_rank_first.png";
+    if (rank == 2) return "assets/images/medal_rank_second.png";
+    if (rank == 3) return "assets/images/medal_rank_third.png";
+    return null;
   }
 
   void _openCompetitionSheet() {
@@ -584,4 +689,34 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
       },
     );
   }
+}
+
+class _TallyLayout {
+  const _TallyLayout({
+    required this.rankWidth,
+    required this.rankToIconGap,
+    required this.stateIconWidth,
+    required this.iconToStateGap,
+    required this.stateToMedalGap,
+    required this.medalGap,
+    required this.countWidth,
+    required this.totalWidth,
+    required this.rowPadding,
+    required this.medalIconSize,
+    required this.rankImageWidth,
+    required this.rankImageHeight,
+  });
+
+  final double rankWidth;
+  final double rankToIconGap;
+  final double stateIconWidth;
+  final double iconToStateGap;
+  final double stateToMedalGap;
+  final double medalGap;
+  final double countWidth;
+  final double totalWidth;
+  final double rowPadding;
+  final double medalIconSize;
+  final double rankImageWidth;
+  final double rankImageHeight;
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/widgets/app_bar_view.dart';
 import 'package:gms_application/core/widgets/no_data_available.dart';
+import 'package:gms_application/core/widgets/responsive_layout.dart';
 import 'package:gms_application/core/widgets/shimmer_screen.dart';
 
 class FaqScreen extends StatefulWidget {
@@ -119,80 +121,95 @@ class _FaqScreenState extends State<FaqScreen> {
     }).toList();
 
     return Scaffold(
-      backgroundColor: AppColors.whiteOffColors,
-      appBar: _TopAppBar(
+      backgroundColor: AppColors.whiteColors,
+      appBar: const CommonAppBar(
         title: "FAQ",
-        onBack: () => Navigator.pop(context),
+        toolbarHeight: 42,
+        backgroundColor: AppColors.whiteColors,
+        showBottomDivider: false,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-        child: Column(
-          children: [
-            _SearchField(
-              controller: _search,
-              onChanged: (_) => setState(() {}),
-            ),
-            SizedBox(height: 12.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 420.w),
-                child: SizedBox(
-                  height: 35.h,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                    separatorBuilder: (_, __) => SizedBox(width: 10.w),
-                    itemBuilder: (context, index) {
-                      final isSelected = index == safeSelectedIndex;
-                      return _CategoryChip(
-                        label: categories[index],
-                        selected: isSelected,
-                        onTap: () => setState(() => _selectedCategoryIndex = index),
-                      );
-                    },
-                  ),
-                ),
+      body: Column(
+        children: [
+          const Divider(height: 0, thickness: 0.5, color: Color(0xFFE0E0E0)),
+          Expanded(
+            child: ResponsiveContent(
+              padding: EdgeInsets.fromLTRB(
+                ResponsiveLayout.adaptiveHorizontalPadding(context),
+                14.h,
+                ResponsiveLayout.adaptiveHorizontalPadding(context),
+                12.h,
               ),
-            ),
-            SizedBox(height: 14.h),
-            Expanded(
-              child: widget.isLoading
-                  ? ListView.separated(
-                      itemCount: 6,
-                      separatorBuilder: (_, __) => SizedBox(height: 12.h),
-                      itemBuilder: (_, __) => ShimmerCard.faq(),
-                    )
-                  : faqs.isEmpty
-                      ? const NoDataAvailable(
-                          title: "No data found",
-                          subtitle: "FAQs will appear here",
-                        )
-                      : ListView.separated(
-                          itemCount: faqs.length,
-                          separatorBuilder: (_, __) => SizedBox(height: 12.h),
+              child: Column(
+                children: [
+                  _SearchField(
+                    controller: _search,
+                    onChanged: (_) => setState(() {}),
+                  ),
+                  SizedBox(height: 16.h),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 420.w),
+                      child: SizedBox(
+                        height: 40.h,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: categories.length,
+                          separatorBuilder: (_, __) => SizedBox(width: 10.w),
                           itemBuilder: (context, index) {
-                            final Map item = faqs[index];
-                            final int id = (item["id"] is num) ? (item["id"] as num).toInt() : index;
-                            final expanded = _expandedIds.contains(id);
-                            return _FaqCard(
-                              item: item,
-                              expanded: expanded,
-                              onToggle: () {
-                                setState(() {
-                                  if (expanded) {
-                                    _expandedIds.remove(id);
-                                  } else {
-                                    _expandedIds.add(id);
-                                  }
-                                });
-                              },
+                            final isSelected = index == safeSelectedIndex;
+                            return _CategoryChip(
+                              label: categories[index],
+                              selected: isSelected,
+                              onTap: () => setState(() => _selectedCategoryIndex = index),
                             );
                           },
                         ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 14.h),
+                  Expanded(
+                    child: widget.isLoading
+                        ? ListView.separated(
+                            itemCount: 6,
+                            separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                            itemBuilder: (_, __) => ShimmerCard.faq(),
+                          )
+                        : faqs.isEmpty
+                            ? const NoDataAvailable(
+                                title: "No data found",
+                                subtitle: "FAQs will appear here",
+                              )
+                            : ListView.separated(
+                                itemCount: faqs.length,
+                                separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                                itemBuilder: (context, index) {
+                                  final Map item = faqs[index];
+                                  final int id =
+                                      (item["id"] is num) ? (item["id"] as num).toInt() : index;
+                                  final expanded = _expandedIds.contains(id);
+                                  return _FaqCard(
+                                    item: item,
+                                    expanded: expanded,
+                                    onToggle: () {
+                                      setState(() {
+                                        if (expanded) {
+                                          _expandedIds.remove(id);
+                                        } else {
+                                          _expandedIds.add(id);
+                                        }
+                                      });
+                                    },
+                                  );
+                                },
+                              ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -201,111 +218,6 @@ class _FaqScreenState extends State<FaqScreen> {
   void dispose() {
     _search.dispose();
     super.dispose();
-  }
-}
-
-class _TopAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final VoidCallback onBack;
-
-  const _TopAppBar({
-    required this.title,
-    required this.onBack,
-  });
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: AppColors.whiteOffColors,
-      elevation: 0,
-      leadingWidth: 56,
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 12),
-        child: _CircleIconButton(
-          icon: Icons.arrow_back,
-          onTap: onBack,
-        ),
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-          fontFamily: "Montserrat",
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
-        ),
-      ),
-      actions: const [
-        Padding(
-          padding: EdgeInsets.only(right: 12),
-          child: _NotificationButton(),
-        ),
-      ],
-    );
-  }
-}
-
-class _CircleIconButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const _CircleIconButton({
-    required this.icon,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: const Color(0xFFF2F2F2),
-      shape: const CircleBorder(),
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        onTap: onTap,
-        child: SizedBox(
-          height: 40,
-          width: 40,
-          child: Icon(icon, color: AppColors.textPrimary, size: 20),
-        ),
-      ),
-    );
-  }
-}
-
-class _NotificationButton extends StatelessWidget {
-  const _NotificationButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Material(
-          color: const Color(0xFFF2F2F2),
-          shape: const CircleBorder(),
-          child: InkWell(
-            customBorder: const CircleBorder(),
-            onTap: () {},
-            child: const SizedBox(
-              height: 40,
-              width: 40,
-              child: Icon(Icons.notifications_none, color: AppColors.textPrimary, size: 20),
-            ),
-          ),
-        ),
-        Positioned(
-          right: 11,
-          top: 10,
-          child: Container(
-            height: 7,
-            width: 7,
-            decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-          ),
-        ),
-      ],
-    );
   }
 }
 
@@ -321,11 +233,16 @@ class _SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 46,
+      width: double.infinity,
+      height: 45.h,
       padding: EdgeInsets.symmetric(horizontal: 14.w),
       decoration: BoxDecoration(
-        color: const Color(0xFFF2F2F2),
-        borderRadius: BorderRadius.circular(26.r),
+        color: const Color(0xFFF9FAFB),
+        borderRadius: BorderRadius.circular(27.r),
+        border: Border.all(
+          color: const Color(0xFFE5E7EB),
+          width: 1,
+        ),
       ),
       child: Row(
         children: [
@@ -367,15 +284,15 @@ class _CategoryChip extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(17.5.r),
+        borderRadius: BorderRadius.circular(27.5.r),
         onTap: onTap,
         child: Container(
-          height: 35.h,
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          height: 20.h,
+          padding: EdgeInsets.symmetric(horizontal: 26.w),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: bg,
-            borderRadius: BorderRadius.circular(17.5.r),
+            borderRadius: BorderRadius.circular(28.r),
             border: Border.all(color: border),
           ),
           child: Center(
@@ -384,10 +301,10 @@ class _CategoryChip extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "Montserrat",
-                fontSize: 12.sp,
+                fontSize: 11.sp,
                 fontWeight: FontWeight.w600,
                 color: fg,
-                height: 1.0,
+                height: 1.13,
               ),
             ),
           ),
@@ -415,14 +332,14 @@ class _FaqCard extends StatelessWidget {
 
     return Material(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(14.r),
+      borderRadius: BorderRadius.circular(18.r),
       child: InkWell(
         onTap: onToggle,
-        borderRadius: BorderRadius.circular(14.r),
+        borderRadius: BorderRadius.circular(18.r),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 18.h),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14.r),
+            borderRadius: BorderRadius.circular(18.r),
             border: Border.all(color: const Color(0xFFE9E9E9)),
           ),
           child: Column(
@@ -437,17 +354,25 @@ class _FaqCard extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: "Montserrat",
                         fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: AppColors.textPrimary,
-                        height: 1.25,
+                        height: 1.54,
                       ),
                     ),
                   ),
                   SizedBox(width: 10.w),
-                  Icon(
-                    expanded ? Icons.remove : Icons.add,
-                    size: 18,
-                    color: AppColors.textPrimary,
+                  Container(
+                    height: 32,
+                    width: 32,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF4F4F4),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      expanded ? Icons.remove : Icons.add,
+                      size: 18,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                 ],
               ),
@@ -458,9 +383,9 @@ class _FaqCard extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: "Montserrat",
                     fontSize: 11.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.textSecondary,
-                    height: 1.5,
+                    fontWeight: FontWeight.w300,
+                    color: AppColors.answerSecondary,
+                    height: 1.64,
                   ),
                 ),
               ],

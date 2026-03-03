@@ -137,4 +137,114 @@ class FTextStyle {
     letterSpacing: 0,
     color: Colors.white.withOpacity(.85), // ⭐ medal card par soft look
   );
+
+  static TextStyle aboutEventTitleStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w700,
+    height: 1.31,
+    color: const Color(0xFF2A2F46),
+    letterSpacing: 0,
+  );
+
+  static TextStyle aboutEventDescriptionStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w400,
+    height: 1.75,
+    color: const Color(0xFF545A67),
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleMonthHeadingStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.scheduleHeading,
+  );
+
+  static TextStyle scheduleNoDateStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.scheduleMutedText,
+  );
+
+  static TextStyle scheduleDateNumberStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 24.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.scheduleDayText,
+  );
+
+  static TextStyle scheduleDateDayStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.scheduleWeekdayText,
+  );
+
+  static TextStyle scheduleDateSelectedNumberStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    height: 1.13,
+    letterSpacing: 0,
+    color: AppColors.scheduleDateSelectedText,
+  );
+
+  static TextStyle scheduleDateSelectedMonthStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 9.sp,
+    fontWeight: FontWeight.w600,
+    height: 1.13,
+    letterSpacing: 0,
+    color: AppColors.scheduleDateSelectedText,
+  );
+
+  static TextStyle scheduleDateUnselectedNumberStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    height: 1.13,
+    letterSpacing: 0,
+    color: AppColors.scheduleDateUnselectedText,
+  );
+
+  static TextStyle scheduleDateUnselectedMonthStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 9.sp,
+    fontWeight: FontWeight.w600,
+    height: 1.13,
+    letterSpacing: 0,
+    color: AppColors.scheduleDateUnselectedText,
+  );
+
+  static TextStyle scheduleMonthChipStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.scheduleMonthText,
+  );
+
+  static TextStyle scheduleEmptyMatchStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.scheduleSubMutedText,
+  );
+
+  static TextStyle scheduleMatchTitleStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 17.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.scheduleHeading,
+  );
+
+  static TextStyle scheduleMatchMetaStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.scheduleMetaText,
+  );
 }

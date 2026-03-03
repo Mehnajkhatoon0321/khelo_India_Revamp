@@ -6,6 +6,7 @@ import 'package:gms_application/core/constants/constant_text.dart';
 import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
 import 'package:gms_application/core/widgets/flutter_animation.dart';
+import 'package:gms_application/core/widgets/responsive_layout.dart';
 import 'package:gms_application/presentation/pages/bottom_navbar/bottom_navbar.dart';
 import 'package:gms_application/presentation/pages/onboarding_screen/privacy_policy_details.dart';
 class PrivacyPolicy extends StatefulWidget {
@@ -41,8 +42,14 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
             /// 🤍 CARD SECTION
             Expanded(
               flex: 6,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(14.w, 0, 14.w, 28.h),
+              child: ResponsiveContent(
+                maxWidth: 760,
+                padding: EdgeInsets.fromLTRB(
+                  ResponsiveLayout.adaptiveHorizontalPadding(context),
+                  0,
+                  ResponsiveLayout.adaptiveHorizontalPadding(context),
+                  28.h,
+                ),
                 child: Container(
                   width: double.infinity,
                   padding: EdgeInsets.fromLTRB(18.w, 32.h, 18.w, 28.h),

@@ -74,6 +74,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final navBarHeight = (screenHeight * 0.085).clamp(64.0, 84.0);
 
     return Scaffold(
       body: IndexedStack(
@@ -82,7 +83,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          height: screenHeight * 0.085, // ✅ dynamic height (8.5% of screen)
+          height: navBarHeight,
           decoration: const BoxDecoration(
             color: Colors.white,
           ),
@@ -104,6 +105,10 @@ class _BottomNavbarState extends State<BottomNavbar> {
     final bool isSelected = selectedIndex == index;
 
     final screenWidth = MediaQuery.of(context).size.width;
+    final iconSize = (screenWidth * (isSelected ? 0.052 : 0.043)).clamp(18.0, 24.0);
+    final indicatorWidth = (screenWidth * 0.15).clamp(44.0, 84.0);
+    final topGap = (screenWidth * 0.03).clamp(8.0, 14.0);
+    final labelGap = (screenWidth * 0.022).clamp(6.0, 10.0);
 
     return InkWell(
       onTap: () => onItemTap(index),
@@ -114,18 +119,17 @@ class _BottomNavbarState extends State<BottomNavbar> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 250),
             height: 3,
-            width: screenWidth * 0.15, // responsive width
+            width: indicatorWidth,
             color: isSelected
                 ? AppColors.primaryColor
                 : Colors.transparent,
           ),
 
-          SizedBox(height: screenWidth * 0.03),
+          SizedBox(height: topGap),
 
           /// 🔹 Responsive Image
-          Container(
-            height:   isSelected
-                ?  screenWidth * 0.052:screenWidth * 0.043,
+          SizedBox(
+            height: iconSize,
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
                 isSelected
@@ -147,7 +151,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
             ),
           ),
 
-          SizedBox(height: screenWidth * 0.022),
+          SizedBox(height: labelGap),
 
           /// 🔹 Responsive Text
           Flexible(

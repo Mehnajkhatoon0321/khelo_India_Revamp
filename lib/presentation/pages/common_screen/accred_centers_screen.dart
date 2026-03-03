@@ -11,6 +11,8 @@ class AccredCentersScreen extends StatelessWidget {
         title: "Accred Centers",
         showBack: true,
         showNotification: true,
+        backgroundColor: Colors.white,
+        showBottomDivider: false,
       ),
       body: Center(
         child: Text("Accred Centers (coming soon)"),

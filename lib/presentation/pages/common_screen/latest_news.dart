@@ -5,6 +5,7 @@ import 'package:gms_application/core/constants/themes_colors.dart';
 import 'package:gms_application/core/widgets/no_data_available.dart';
 import 'package:gms_application/core/widgets/shimmer_screen.dart';
 import 'package:gms_application/core/widgets/app_bar_view.dart';
+import 'package:gms_application/core/widgets/responsive_layout.dart';
 import 'package:video_player/video_player.dart';
 
 class LatestNewsScreen extends StatelessWidget {
@@ -68,67 +69,74 @@ class LatestNewsScreen extends StatelessWidget {
         title: "Latest News",
         showBack: true,
         showNotification: true,
+        backgroundColor: AppColors.whiteColors,
+        showBottomDivider: false,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Today News",
-              style: FTextStyle.textSecBlackStylePrimary.copyWith(fontSize: 18.sp),
-            ),
-            SizedBox(height: 12.h),
-            if (isLoading)
-              ShimmerCard.large()
-            else if (hasToday)
-              _TodayNewsCard(
-                title: todayTitle,
-                date: todayDate,
-                type: todayType,
-                media: todayMedia,
-                onTap: () {},
-              )
-            else
-              const NoDataAvailable(
-                title: "No data found",
-                subtitle: "Latest news will appear here",
+      body: ResponsiveContent(
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveLayout.adaptiveHorizontalPadding(context),
+          vertical: 14.h,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Today News",
+                style: FTextStyle.textSecBlackStylePrimary.copyWith(fontSize: 18.sp),
               ),
-            SizedBox(height: 22.h),
-            Text(
-              "More News",
-              style: FTextStyle.textSecBlackStylePrimary.copyWith(fontSize: 18.sp),
-            ),
-            SizedBox(height: 12.h),
-            if (isLoading)
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                separatorBuilder: (_, __) => SizedBox(height: 10.h),
-                itemBuilder: (_, __) => ShimmerCard.tile(),
-              )
-            else if (hasMore)
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: moreNews.length,
-                separatorBuilder: (_, __) => SizedBox(height: 10.h),
-                itemBuilder: (context, index) {
-                  final raw = moreNews[index];
-                  final Map item = raw is Map ? raw : const {};
-                  return _MoreNewsTile(
-                    item: item,
-                    onTap: () {},
-                  );
-                },
-              )
-            else
-              const NoDataAvailable(
-                title: "No data found",
-                subtitle: "More news will appear here",
+              SizedBox(height: 12.h),
+              if (isLoading)
+                ShimmerCard.large()
+              else if (hasToday)
+                _TodayNewsCard(
+                  title: todayTitle,
+                  date: todayDate,
+                  type: todayType,
+                  media: todayMedia,
+                  onTap: () {},
+                )
+              else
+                const NoDataAvailable(
+                  title: "No data found",
+                  subtitle: "Latest news will appear here",
+                ),
+              SizedBox(height: 22.h),
+              Text(
+                "More News",
+                style: FTextStyle.textSecBlackStylePrimary.copyWith(fontSize: 18.sp),
               ),
-          ],
+              SizedBox(height: 12.h),
+              if (isLoading)
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 3,
+                  separatorBuilder: (_, __) => SizedBox(height: 10.h),
+                  itemBuilder: (_, __) => ShimmerCard.tile(),
+                )
+              else if (hasMore)
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: moreNews.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 10.h),
+                  itemBuilder: (context, index) {
+                    final raw = moreNews[index];
+                    final Map item = raw is Map ? raw : const {};
+                    return _MoreNewsTile(
+                      item: item,
+                      onTap: () {},
+                    );
+                  },
+                )
+              else
+                const NoDataAvailable(
+                  title: "No data found",
+                  subtitle: "More news will appear here",
+                ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gms_application/core/constants/themes_colors.dart';
 import 'package:gms_application/presentation/pages/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// Lock app to portrait only
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-
   /// Set white status bar with black icons
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
+      statusBarColor: AppColors.whiteColors,
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.light,
     ),
@@ -31,22 +26,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ScreenUtilInit(
-      minTextAdapt: true,
-      splitScreenMode: true,
+      designSize: const Size(375, 812),
+      minTextAdapt: false,
+      splitScreenMode: false,
       child: MaterialApp(
-         debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
+        builder: (context, child) {
+          final MediaQueryData mediaQuery = MediaQuery.of(context);
+          return MediaQuery(
+            data: mediaQuery.copyWith(
+              // Keep typography consistent across devices.
+              textScaler: const TextScaler.linear(1.0),
+            ),
+            child: child ?? const SizedBox.shrink(),
+          );
+        },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
+          fontFamily: 'Montserrat',
+          textTheme: Typography.material2021().black.apply(
+                fontFamily: 'Montserrat',
+              ),
           appBarTheme: const AppBarTheme(
             systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: Colors.white,
+              statusBarColor:  AppColors.whiteColors,
               statusBarIconBrightness: Brightness.dark,
               statusBarBrightness: Brightness.light,
             ),
           ),
         ),
-        home:SplashScreen() ,
+        home: SplashScreen(),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
 import 'package:gms_application/core/widgets/flutter_animation.dart';
+import 'package:gms_application/core/widgets/responsive_layout.dart';
 import 'package:gms_application/presentation/pages/common_screen/about_screen.dart';
 import 'package:gms_application/presentation/pages/common_screen/accred_centers_screen.dart';
 import 'package:gms_application/presentation/pages/common_screen/faq.dart';
@@ -165,6 +166,11 @@ class _HomePageWithNavbarState extends State<HomePage> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final topCardHeight = (screenWidth * 0.52).clamp(178.0, 248.0);
+    final topCardPadding = (screenWidth * 0.035).clamp(12.0, 20.0);
+    final topLogoHeight = (screenWidth * 0.10).clamp(28.0, 48.0);
+    final mascotMaxWidth = (screenWidth * 0.28).clamp(86.0, 220.0);
+    final mascotHeight = (topCardHeight * 0.82).clamp(110.0, 190.0);
 
     final Map<String, dynamic> card =
         (homeResponse["card"] as Map<String, dynamic>);
@@ -197,7 +203,9 @@ class _HomePageWithNavbarState extends State<HomePage> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ResponsiveLayout.adaptiveHorizontalPadding(context),
+                            ),
                             child: Column(
                             children: [
                               SizedBox(height: 10,),
@@ -318,7 +326,7 @@ class _HomePageWithNavbarState extends State<HomePage> {
                               ///home card design
 
                               Container(
-                                height: screenHeight * 0.24,
+                                height: topCardHeight,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25.r),
@@ -335,9 +343,9 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          EdgeInsets.all(screenWidth * 0.04),
+                                      padding: EdgeInsets.all(topCardPadding),
                                       child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Expanded(
                                             child: Column(
@@ -351,13 +359,13 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                                         .isNotEmpty)
                                                   Image.asset(
                                                     card["gamesLogo"],
-                                                    height:
-                                                        screenHeight * 0.07,
+                                                    height: topLogoHeight,
+                                                    fit: BoxFit.contain,
                                                   ),
                                                 SizedBox(height: 10.h),
                                                 Text(
                                                   card["gameName"] ?? "",
-                                                  maxLines: 2,
+                                                  maxLines: screenWidth >= 700 ? 3 : 2,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: FTextStyle.heading,
@@ -369,16 +377,25 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                                   card["gamesDate"] ?? "",
                                                   style:
                                                       FTextStyle.subHeading,
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
                                                 ),
                                               ],
                                             ),
                                           ),
+                                          SizedBox(width: 8.w),
                                           if (card["mascots"] != null &&
                                               (card["mascots"] as String)
                                                   .isNotEmpty)
-                                            Image.asset(
-                                              card["mascots"],
-                                              height: screenHeight * 0.18,
+                                            ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                maxWidth: mascotMaxWidth,
+                                                maxHeight: mascotHeight,
+                                              ),
+                                              child: Image.asset(
+                                                card["mascots"],
+                                                fit: BoxFit.contain,
+                                              ),
                                             ),
                                         ],
                                       ),

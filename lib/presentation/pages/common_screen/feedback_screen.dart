@@ -11,6 +11,8 @@ class FeedbackScreen extends StatelessWidget {
         title: "Feedback",
         showBack: true,
         showNotification: true,
+        backgroundColor: Colors.white,
+        showBottomDivider: false,
       ),
       body: Center(
         child: Text("Feedback (coming soon)"),

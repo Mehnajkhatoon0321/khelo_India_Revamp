@@ -15,6 +15,8 @@ class _VenueState extends State<Venue> {
         title: "Venues",
         showBack: true,
         showNotification: true,
+        backgroundColor: Colors.white,
+        showBottomDivider: false,
       ),
       body: Center(
         child: Text("Venues (coming soon)"),
