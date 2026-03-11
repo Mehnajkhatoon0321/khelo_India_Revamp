@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gms_application/core/constants/constant_text.dart';
 import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 import 'package:gms_application/presentation/pages/bottom_navbar/bottom_navbar.dart';
+
 class PrivacyPolicyDetails extends StatefulWidget {
   const PrivacyPolicyDetails({super.key});
 
@@ -42,7 +44,9 @@ class _PrivacyPolicyDetailsState extends State<PrivacyPolicyDetails> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 70,),
+                    SizedBox(
+                      height: 70,
+                    ),
 
                     Center(
                       child: Container(
@@ -56,16 +60,22 @@ class _PrivacyPolicyDetailsState extends State<PrivacyPolicyDetails> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 25,),
+                    SizedBox(
+                      height: 25,
+                    ),
+
                     /// 📝 Title
-                    Text(
+                    TrText(
                       Constants.privacyTitleTxt,
                       textAlign: TextAlign.center,
                       style: FTextStyle.headingTxtPrimary,
                     ),
-                    SizedBox(height: 15,),
+                    SizedBox(
+                      height: 15,
+                    ),
+
                     /// 📄 Description
-                    Text(
+                    TrText(
                       Constants.privacyDecTxt,
                       textAlign: TextAlign.center,
                       style: FTextStyle.privacyDecTxt,
@@ -78,17 +88,19 @@ class _PrivacyPolicyDetailsState extends State<PrivacyPolicyDetails> {
                             color: AppColors.whiteColors,
                             width: 1,
                           ),
-                          gradient:AppColors.acceptGradient
-                      ),
+                          gradient: AppColors.acceptGradient),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(28.5.r),
                         child: ActionSlider.standard(
                           height: 40.h,
                           sliderBehavior: SliderBehavior.move,
                           backgroundColor: Colors.transparent,
+
                           /// ⚪ Complete hote hi white
-                          toggleColor:
-                          _isSuccess ? Colors.white : AppColors.primaryColor,
+                          toggleColor: _isSuccess
+                              ? Colors.white
+                              : AppColors.primaryColor,
+
                           /// ➡️ Arrow
                           icon: Container(
                             width: 45.w,
@@ -96,16 +108,19 @@ class _PrivacyPolicyDetailsState extends State<PrivacyPolicyDetails> {
                             margin: EdgeInsets.only(left: 2.w),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color:
-                              _isSuccess ? Colors.white : AppColors.primaryColor,
+                              color: _isSuccess
+                                  ? Colors.white
+                                  : AppColors.primaryColor,
                             ),
                             child: Icon(
                               Icons.double_arrow_outlined,
-                              color:
-                              _isSuccess ? AppColors.primaryColor : Colors.white,
+                              color: _isSuccess
+                                  ? AppColors.primaryColor
+                                  : Colors.white,
                               size: 20,
                             ),
                           ),
+
                           /// 🔄 Loader (BLUE)
                           loadingIcon: SizedBox(
                             width: 55,
@@ -136,11 +151,10 @@ class _PrivacyPolicyDetailsState extends State<PrivacyPolicyDetails> {
                               ),
                             ),
                           ),
-                          child: Text(
+                          child: TrText(
                             Constants.acceptTxt.toUpperCase(),
                             style: FTextStyle.acceptTxtStyle.copyWith(
-                              color:
-                              AppColors.primaryColor,
+                              color: AppColors.primaryColor,
                             ),
                           ),
                           action: (controller) async {
@@ -155,20 +169,19 @@ class _PrivacyPolicyDetailsState extends State<PrivacyPolicyDetails> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) =>  BottomNavbar(),
+                                    builder: (_) => BottomNavbar(),
                                   ),
                                 );
                               });
-
-
-
                             });
                           },
                         ),
                       ),
                     ),
+
                     /// 👉 ACCEPT SLIDER
                     SizedBox(height: 30.h),
+
                     /// 🔗 Privacy Policy
                     GestureDetector(
                       onTap: () {
@@ -179,12 +192,10 @@ class _PrivacyPolicyDetailsState extends State<PrivacyPolicyDetails> {
                           ),
                         );
                       },
-                      child: Text(
+                      child: TrText(
                         Constants.privacyPolicyTxt,
                         style: FTextStyle.privacyPolicyTxtStyle.copyWith(
                           decoration: TextDecoration.underline,
-
-
                         ),
                       ),
                     ),

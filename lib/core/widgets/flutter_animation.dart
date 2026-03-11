@@ -52,7 +52,6 @@
 //   AppAnimation get animation => AppAnimation(this);
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -63,41 +62,41 @@ class AppAnimation {
 
   Widget fade({Duration duration = const Duration(milliseconds: 600)}) {
     return child.animate().fadeIn(
-      duration: duration,
-      curve: Curves.easeOut,
-    );
+          duration: duration,
+          curve: Curves.easeOut,
+        );
   }
 
   Widget scale({Duration duration = const Duration(milliseconds: 600)}) {
     return child.animate().scale(
-      begin: const Offset(0.9, 0.9),
-      duration: duration,
-      curve: Curves.easeOut,
-    );
+          begin: const Offset(0.9, 0.9),
+          duration: duration,
+          curve: Curves.easeOut,
+        );
   }
 
   Widget fromLeft({Duration duration = const Duration(milliseconds: 600)}) {
     return child.animate().slideX(
-      begin: -0.3,
-      duration: duration,
-      curve: Curves.easeOut,
-    );
+          begin: -0.3,
+          duration: duration,
+          curve: Curves.easeOut,
+        );
   }
 
   Widget fromRight({Duration duration = const Duration(milliseconds: 600)}) {
     return child.animate().slideX(
-      begin: 0.3,
-      duration: duration,
-      curve: Curves.easeOut,
-    );
+          begin: 0.3,
+          duration: duration,
+          curve: Curves.easeOut,
+        );
   }
 
   Widget fromBottom({Duration duration = const Duration(milliseconds: 600)}) {
     return child.animate().slideY(
-      begin: 0.3,
-      duration: duration,
-      curve: Curves.easeOut,
-    );
+          begin: 0.3,
+          duration: duration,
+          curve: Curves.easeOut,
+        );
   }
 
   Widget fadeScale({Duration duration = const Duration(milliseconds: 700)}) {
@@ -116,11 +115,11 @@ class AppAnimation {
     return child
         .animate(onPlay: (controller) => controller.repeat(reverse: true))
         .moveX(
-      begin: begin,
-      end: end,
-      duration: duration,
-      curve: Curves.easeInOut,
-    );
+          begin: begin,
+          end: end,
+          duration: duration,
+          curve: Curves.easeInOut,
+        );
   }
 }
 

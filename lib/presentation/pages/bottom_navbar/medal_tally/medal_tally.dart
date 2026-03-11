@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
+import 'package:gms_application/core/widgets/select_competition_screen.dart';
+import 'package:gms_application/presentation/pages/bottom_navbar/data/competition_list_data.dart';
+import 'package:gms_application/presentation/pages/bottom_navbar/medal_tally/medal_sports_list.dart';
 
 class MedalTallyScreen extends StatefulWidget {
   const MedalTallyScreen({super.key});
@@ -11,16 +15,9 @@ class MedalTallyScreen extends StatefulWidget {
 }
 
 class _MedalTallyScreenState extends State<MedalTallyScreen> {
-
-
   int _selectedCompetitionId = 1;
 
   final Map<String, dynamic> _medalTallyJson = {
-    "competitions": [
-      {"id": 1, "label": "Khelo India Water Sports Festival Games 2026"},
-      {"id": 2, "label": "Khelo India Winter Sports Festival Games 2026"},
-      {"id": 3, "label": "Khelo India University Games 2026"},
-    ],
     "rows": [
       {
         "rank": 1,
@@ -88,27 +85,30 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
     ],
   };
 
-  List<Map<String, dynamic>> get _competitions =>
-      (_medalTallyJson["competitions"] as List).cast<Map<String, dynamic>>();
+  List<Map<String, dynamic>> get _competitions => kCompetitionList;
 
   List<Map<String, dynamic>> get _tallyRows =>
       (_medalTallyJson["rows"] as List).cast<Map<String, dynamic>>();
 
   @override
   Widget build(BuildContext context) {
-    final totalGold =_tallyRows.fold<int>(0, (sum, row) => sum + (row["gold"] as int));
-    final totalSilver = _tallyRows.fold<int>(0, (sum, row) => sum + (row["silver"] as int));
-    final totalBronze = _tallyRows.fold<int>(0, (sum, row) => sum + (row["bronze"] as int));
+    final totalGold =
+        _tallyRows.fold<int>(0, (sum, row) => sum + (row["gold"] as int));
+    final totalSilver =
+        _tallyRows.fold<int>(0, (sum, row) => sum + (row["silver"] as int));
+    final totalBronze =
+        _tallyRows.fold<int>(0, (sum, row) => sum + (row["bronze"] as int));
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.whiteColors,
-        body: Column(
+    return Scaffold(
+      backgroundColor: AppColors.whiteColors,
+      body: SafeArea(
+        bottom: false,
+        child: Column(
           children: [
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 18.0,top: 30),
+                  padding: const EdgeInsets.only(left: 18.0, top: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,7 +119,6 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: AppColors.whiteOffColors,
-
                         ),
                         alignment: Alignment.center,
                         child: Image.asset(
@@ -131,7 +130,7 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
                       ),
                       SizedBox(width: 12.w),
                       Expanded(
-                        child: Text(
+                        child: TrText(
                           "Medal at Stake",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -141,19 +140,15 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 6.h),
                 GestureDetector(
                   onTap: _openCompetitionSheet,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Flexible(
-                        child: Text(
-                          _competitions
-                              .firstWhere(
-                                (e) => e["id"] == _selectedCompetitionId,
-                          )["label"]
-                              .toString(),
+                        child: TrText(
+                          getCompetitionLabelById(_selectedCompetitionId),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: FTextStyle.helloTxt,
@@ -163,21 +158,24 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
                       const Icon(
                         Icons.keyboard_arrow_down_rounded,
                         size: 18,
-                        color: Color(0xFF2E3142),
+                        color: AppColors.appBarTitle,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10.h),
-                Divider(height: 2,thickness: 2,color: AppColors.whiteOffColors,),
+                SizedBox(height: 6.h),
+                Divider(
+                  height: 2,
+                  thickness: 2,
+                  color: AppColors.whiteOffColors,
+                ),
               ],
             ),
-
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.only(
                   left: 12.w,
-                  top: 10.w,
+                  top: 6.w,
                   right: 12.w,
                   bottom: 18.h,
                 ),
@@ -190,7 +188,7 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
                       totalBronze: totalBronze,
                     ),
                     SizedBox(height: 16.h),
-                    Text(
+                    TrText(
                       "Medal Tally",
                       style: FTextStyle.textSecBlackStylePrimary,
                     ),
@@ -206,10 +204,11 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
                               itemCount: _tallyRows.length,
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              separatorBuilder: (_, __) => SizedBox(height: 10.h),
+                              separatorBuilder: (_, __) =>
+                                  SizedBox(height: 10.h),
                               itemBuilder: (_, index) {
                                 final row = _tallyRows[index];
-                                return _buildTallyRow(row, layout);
+                                return _buildTallyRow(row, layout, index);
                               },
                             ),
                           ],
@@ -246,7 +245,6 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildMedalChip("Silver", totalSilver),
-
           _buildMedalChip("Gold", totalGold),
           _buildMedalChip("Bronze", totalBronze),
         ],
@@ -260,55 +258,49 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
     /// ⭐ Gold bigger
     final double medalSize = isGold ? 111.w : 47.w;
 
-    String medalImage =
-    label == "Gold"
+    String medalImage = label == "Gold"
         ? "assets/images/medal_card_gold.png"
         : label == "Silver"
-        ? "assets/images/medal_card_silver.png"
-        : "assets/images/medal_card_bronze.png";
+            ? "assets/images/medal_card_silver.png"
+            : "assets/images/medal_card_bronze.png";
 
     return GestureDetector(
-      onTap: () {
-
-      },
+      onTap: () {},
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           /// ⭐ fixed box removes spacing issue
-        SizedBox(
-        width: medalSize,
-        height: isGold ? medalSize - 24.h : medalSize,   // ⭐ height reduce
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Transform.translate(
-              offset: isGold ? Offset(0, -0.h) : Offset.zero,
-              child: Image.asset(
-                medalImage,
-                width: medalSize,
-                height: medalSize,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Text(
-              count.toString(),
-              style: TextStyle(
-                fontSize: isGold ? 14.sp : 10.sp,
-                fontWeight: FontWeight.w800,
-                color: const Color(0xff6B3A00),
-              ),
-            ),
-         ] )
-         ),
+          SizedBox(
+              width: medalSize,
+              height: isGold ? medalSize - 24.h : medalSize, // ⭐ height reduce
+              child: Stack(alignment: Alignment.center, children: [
+                Transform.translate(
+                  offset: isGold ? Offset(0, -0.h) : Offset.zero,
+                  child: Image.asset(
+                    medalImage,
+                    width: medalSize,
+                    height: medalSize,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                TrText(
+                  count.toString(),
+                  style: FTextStyle.cardTileText.copyWith(
+                    fontSize: isGold ? 14.sp : 10.sp,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.medalCountText,
+                  ),
+                ),
+              ])),
 
           /// ⭐ very small gap
           SizedBox(height: 2.h),
 
-          Text(
+          TrText(
             label,
-            style: TextStyle(
+            style: FTextStyle.medalSub.copyWith(
               fontSize: 11.sp,
-              color: Colors.white,
+              color: AppColors.whiteColors,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -316,11 +308,13 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
       ),
     );
   }
+
   Widget _buildTableHeader(_TallyLayout layout) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: layout.rowPadding, vertical: 10.h),
+      padding:
+          EdgeInsets.symmetric(horizontal: layout.rowPadding, vertical: 10.h),
       decoration: BoxDecoration(
-        color:AppColors.whiteOffColors,
+        color: AppColors.whiteOffColors,
         borderRadius: BorderRadius.circular(12.r),
         // boxShadow: const [
         //   // BoxShadow(
@@ -334,7 +328,7 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
         children: [
           SizedBox(
             width: layout.rankWidth,
-            child: Text(
+            child: TrText(
               "Rank",
               style: FTextStyle.chipText,
             ),
@@ -343,7 +337,7 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
           SizedBox(width: layout.stateIconWidth),
           SizedBox(width: layout.iconToStateGap),
           Expanded(
-            child: Text(
+            child: TrText(
               "State",
               style: FTextStyle.chipText,
             ),
@@ -351,19 +345,19 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
           SizedBox(width: layout.stateToMedalGap),
           _buildMedalHeaderCircle(
             imagePath: "assets/images/medal_total_gold.png",
-            backgroundColor: const Color(0xFFFFF5D6),
+            backgroundColor: AppColors.medalHeaderGoldBg,
             size: layout.medalIconSize,
           ),
           SizedBox(width: layout.medalGap),
           _buildMedalHeaderCircle(
             imagePath: "assets/images/medal_total_silver.png",
-            backgroundColor: const Color(0xFFEFF2FF),
+            backgroundColor: AppColors.medalHeaderSilverBg,
             size: layout.medalIconSize,
           ),
           SizedBox(width: layout.medalGap),
           _buildMedalHeaderCircle(
             imagePath: "assets/images/medal_total_bronze.png",
-            backgroundColor: const Color(0xFFFFE3D3),
+            backgroundColor: AppColors.medalHeaderBronzeBg,
             size: layout.medalIconSize,
           ),
           SizedBox(width: layout.medalGap),
@@ -371,7 +365,7 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
             width: layout.totalWidth,
             child: Align(
               alignment: Alignment.centerRight,
-              child: Text(
+              child: TrText(
                 "Total",
                 style: FTextStyle.chipText,
               ),
@@ -400,7 +394,8 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
     );
   }
 
-  Widget _buildTallyRow(Map<String, dynamic> row, _TallyLayout layout) {
+  Widget _buildTallyRow(
+      Map<String, dynamic> row, _TallyLayout layout, int index) {
     final int rank = row["rank"] as int;
     final Gradient? cardGradient;
 
@@ -408,19 +403,19 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
       cardGradient = const LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-        colors: [Color(0xFFFEECAC), Color(0xFFFFFFFF)],
+        colors: [AppColors.medalFirstGradientStart, AppColors.whiteColors],
       );
     } else if (rank == 2) {
       cardGradient = const LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-        colors: [Color(0xFFE4E4E4), Color(0xFFFFFFFF)],
+        colors: [AppColors.medalSecondGradientStart, AppColors.whiteColors],
       );
     } else if (rank == 3) {
       cardGradient = const LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-        colors: [Color(0xFFF7D3B8), Color(0xFFFFFFFF)],
+        colors: [AppColors.medalThirdGradientStart, AppColors.whiteColors],
       );
     } else {
       cardGradient = null;
@@ -428,78 +423,99 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
 
     final String? rankImagePath = _getRankImagePath(rank);
 
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: layout.rowPadding, vertical: 12.h),
-      decoration: BoxDecoration(
-        color: cardGradient == null ? Colors.white : null,
-        gradient: cardGradient,
+    return TweenAnimationBuilder<double>(
+      tween: Tween<double>(begin: 0, end: 1),
+      duration: Duration(milliseconds: 240 + (index * 55)),
+      curve: Curves.easeOutCubic,
+      builder: (context, value, child) {
+        return Opacity(
+          opacity: value,
+          child: Transform.translate(
+            offset: Offset(0, 16 * (1 - value)),
+            child: child,
+          ),
+        );
+      },
+      child: InkWell(
         borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(color: AppColors.whiteOffColors,width: 2.0),
-
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: layout.rankWidth,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: rankImagePath != null
-                  ? Image.asset(
-                      rankImagePath,
-                      width: layout.rankImageWidth,
-                      height: layout.rankImageHeight,
-                      fit: BoxFit.contain,
-                    )
-                  : Text(
-                      rank.toString(),
-                      style: FTextStyle.cardTileText.copyWith(
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-            ),
+        onTap: () => _openSportsList(row),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: layout.rowPadding,
+            vertical: 12.h,
           ),
-          SizedBox(width: layout.rankToIconGap),
-          Image.asset(
-            (row["stateImage"] ?? "assets/images/profile_image.png").toString(),
-            width: layout.stateIconWidth,
-            height: layout.stateIconWidth,
-            fit: BoxFit.cover,
+          decoration: BoxDecoration(
+            color: cardGradient == null ? AppColors.whiteColors : null,
+            gradient: cardGradient,
+            borderRadius: BorderRadius.circular(18.r),
+            border: Border.all(color: AppColors.whiteOffColors, width: 2.0),
           ),
-          SizedBox(width: layout.iconToStateGap),
-          Expanded(
-            child: Text(
-              row["state"].toString(),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: FTextStyle.cardTileText.copyWith(
-                fontFamily: "Montserrat",
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w600,
-                height: 1.13,
-                letterSpacing: 0,
+          child: Row(
+            children: [
+              SizedBox(
+                width: layout.rankWidth,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: rankImagePath != null
+                      ? Image.asset(
+                          rankImagePath,
+                          width: layout.rankImageWidth,
+                          height: layout.rankImageHeight,
+                          fit: BoxFit.contain,
+                        )
+                      : TrText(
+                          rank.toString(),
+                          style: FTextStyle.cardTileText.copyWith(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                ),
               ),
-            ),
-          ),
-          SizedBox(width: layout.stateToMedalGap),
-          _buildCountText(row["gold"] as int, width: layout.countWidth),
-          SizedBox(width: layout.medalGap),
-          _buildCountText(row["silver"] as int, width: layout.countWidth),
-          SizedBox(width: layout.medalGap),
-          _buildCountText(row["bronze"] as int, width: layout.countWidth),
-          SizedBox(width: layout.medalGap),
-          SizedBox(
-            width: layout.totalWidth,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: _buildCountText(
-                row["total"] as int,
-                isBold: true,
+              SizedBox(width: layout.rankToIconGap),
+              Image.asset(
+                (row["stateImage"] ?? "assets/images/profile_image.png")
+                    .toString(),
+                width: layout.stateIconWidth,
+                height: layout.stateIconWidth,
+                fit: BoxFit.cover,
+              ),
+              SizedBox(width: layout.iconToStateGap),
+              Expanded(
+                child: TrText(
+                  row["state"].toString(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: FTextStyle.cardTileText.copyWith(
+                    fontFamily: "Montserrat",
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w600,
+                    height: 1.13,
+                    letterSpacing: 0,
+                  ),
+                ),
+              ),
+              SizedBox(width: layout.stateToMedalGap),
+              _buildCountText(row["gold"] as int, width: layout.countWidth),
+              SizedBox(width: layout.medalGap),
+              _buildCountText(row["silver"] as int, width: layout.countWidth),
+              SizedBox(width: layout.medalGap),
+              _buildCountText(row["bronze"] as int, width: layout.countWidth),
+              SizedBox(width: layout.medalGap),
+              SizedBox(
                 width: layout.totalWidth,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: _buildCountText(
+                    row["total"] as int,
+                    isBold: true,
+                    width: layout.totalWidth,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -511,7 +527,7 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
   }) {
     return SizedBox(
       width: width,
-      child: Text(
+      child: TrText(
         value.toString(),
         textAlign: TextAlign.center,
         style: FTextStyle.datePicker.copyWith(
@@ -562,131 +578,27 @@ class _MedalTallyScreenState extends State<MedalTallyScreen> {
     return null;
   }
 
-  void _openCompetitionSheet() {
-    showModalBottomSheet(
+  Future<void> _openCompetitionSheet() async {
+    final int? selectedId = await openSelectCompetitionBottomSheet(
       context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (_) {
-        return DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: .42,
-          minChildSize: .32,
-          maxChildSize: .75,
-          builder: (_, controller) {
-            return Container(
-              padding: const EdgeInsets.fromLTRB(18, 12, 18, 26),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(26)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(.08),
-                    blurRadius: 20,
-                    offset: const Offset(0, -6),
-                  )
-                ],
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    height: 4.5,
-                    width: 46,
-                    margin: const EdgeInsets.only(bottom: 14),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                  ),
-                  Text(
-                    "Select Competition",
-                    style: FTextStyle.helloTxt.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 17,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: ListView.separated(
-                      controller: controller,
-                      itemCount: _competitions.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 8),
-                      itemBuilder: (_, index) {
-                        final item = _competitions[index];
-                        final bool isSelected =
-                            item["id"] == _selectedCompetitionId;
+      selectedCompetitionId: _selectedCompetitionId,
+      competitions: _competitions,
+    );
 
-                        return Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(14),
-                            onTap: () {
-                              setState(() {
-                                _selectedCompetitionId = item["id"] as int;
-                              });
-                              Navigator.pop(context);
-                            },
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 220),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 14,
-                                vertical: 13,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? AppColors.primaryColor.withOpacity(.08)
-                                    : AppColors.whiteOffColors,
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      item["label"].toString(),
-                                      style: FTextStyle.helloTxt.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  AnimatedContainer(
-                                    duration: const Duration(milliseconds: 220),
-                                    height: 20,
-                                    width: 20,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: isSelected
-                                          ? AppColors.primaryColor
-                                          : Colors.transparent,
-                                      border: Border.all(
-                                        color: isSelected
-                                            ? AppColors.primaryColor
-                                            : Colors.grey.shade300,
-                                        width: 1.5,
-                                      ),
-                                    ),
-                                    child: isSelected
-                                        ? const Icon(
-                                            Icons.check,
-                                            size: 12,
-                                            color: Colors.white,
-                                          )
-                                        : null,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
+    if (!mounted || selectedId == null) return;
+    setState(() {
+      _selectedCompetitionId = selectedId;
+    });
+  }
+
+  void _openSportsList(Map<String, dynamic> row) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => MedalSportsList(
+          teamTitle: row['state']?.toString() ?? 'Sports',
+        ),
+      ),
     );
   }
 }

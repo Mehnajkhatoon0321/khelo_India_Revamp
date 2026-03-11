@@ -17,8 +17,8 @@ class ConnectivityService {
 
     Connectivity().onConnectivityChanged.listen((results) {
       final connected = results.any(
-            (e) =>
-        e == ConnectivityResult.mobile ||
+        (e) =>
+            e == ConnectivityResult.mobile ||
             e == ConnectivityResult.wifi ||
             e == ConnectivityResult.ethernet,
       );
@@ -32,8 +32,8 @@ class ConnectivityService {
     final results = await Connectivity().checkConnectivity();
 
     return results.any(
-          (e) =>
-      e == ConnectivityResult.mobile ||
+      (e) =>
+          e == ConnectivityResult.mobile ||
           e == ConnectivityResult.wifi ||
           e == ConnectivityResult.ethernet,
     );

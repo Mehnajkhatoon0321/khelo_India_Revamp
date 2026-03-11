@@ -19,8 +19,8 @@ Future<DateTime?> showCommonDatePicker({
         data: Theme.of(context).copyWith(
           colorScheme: Theme.of(context).colorScheme.copyWith(
                 primary: AppColors.primaryColor,
-                onPrimary: Colors.white,
-                surface: Colors.white,
+                onPrimary: AppColors.whiteColors,
+                surface: AppColors.whiteColors,
                 onSurface: AppColors.textPrimary,
               ),
         ),

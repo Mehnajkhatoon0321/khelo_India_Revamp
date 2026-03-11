@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
-
-
+import 'package:gms_application/core/utils/simple_translator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,34 +21,29 @@ class _HomePageWithNavbarState extends State<HomePage> {
       "gameName": "Khelo India Water Sports Festival Games 2026",
       "gamesDate": "05 Feb 2024 - 14 Feb 2024",
     },
-
-
-
   };
 
   final List<Map<String, dynamic>> menuItems = [
     {
-      "id":1,
+      "id": 1,
       "label": "Score",
       "image": "assets/images/home.png",
     },
     {
-      "id":2,
+      "id": 2,
       "label": "Schedule",
       "image": "assets/images/schedule.png",
     },
     {
-      "id":3,
+      "id": 3,
       "label": "About",
       "image": "assets/images/venue.png",
     },
     {
-      "id":4,
+      "id": 4,
       "label": "Accred Centers",
       "image": "assets/images/login.png",
     },
-
-
   ];
 
   List exploreItems = [
@@ -59,18 +53,30 @@ class _HomePageWithNavbarState extends State<HomePage> {
     {"title": "Gallery", "image": "assets/images/gallery.png"},
     {"title": "FAQ", "image": "assets/images/faq.png"},
     {"title": "Venues", "image": "assets/images/venue.png"},
-
-
-
   ];
 
   List sports = [
-    {"title": "Ski Mountaineering", "date": "20th Jan 25 - 31st Jan 25", "image": "assets/images/featured.png"},
-    {"title": "Alpine Skiing", "date": "20th Jan 25 - 31st Jan 25", "image": "assets/images/featured.png"},
-    {"title": "Alpine Skiing", "date": "20th Jan 25 - 31st Jan 25", "image": "assets/images/featured.png"},
-    {"title": "Alpine Skiing", "date": "20th Jan 25 - 31st Jan 25", "image": "assets/images/featured.png"},
+    {
+      "title": "Ski Mountaineering",
+      "date": "20th Jan 25 - 31st Jan 25",
+      "image": "assets/images/featured.png"
+    },
+    {
+      "title": "Alpine Skiing",
+      "date": "20th Jan 25 - 31st Jan 25",
+      "image": "assets/images/featured.png"
+    },
+    {
+      "title": "Alpine Skiing",
+      "date": "20th Jan 25 - 31st Jan 25",
+      "image": "assets/images/featured.png"
+    },
+    {
+      "title": "Alpine Skiing",
+      "date": "20th Jan 25 - 31st Jan 25",
+      "image": "assets/images/featured.png"
+    },
   ];
-
 
   List newsList = [
     {
@@ -110,7 +116,8 @@ class _HomePageWithNavbarState extends State<HomePage> {
       "gold": 9,
       "silver": 2,
       "bronze": 0,
-    }, {
+    },
+    {
       "name": "Jagdish Prasad",
       "university": "Dr. A.P.J. Abdul Kalam Technical University",
       "sport": "Ski Mountaineering",
@@ -118,7 +125,8 @@ class _HomePageWithNavbarState extends State<HomePage> {
       "gold": 9,
       "silver": 2,
       "bronze": 0,
-    }, {
+    },
+    {
       "name": "Jagdish Prasad",
       "university": "Dr. A.P.J. Abdul Kalam Technical University",
       "sport": "Ski Mountaineering",
@@ -126,7 +134,8 @@ class _HomePageWithNavbarState extends State<HomePage> {
       "gold": 9,
       "silver": 2,
       "bronze": 0,
-    }, {
+    },
+    {
       "name": "Jagdish Prasad",
       "university": "Dr. A.P.J. Abdul Kalam Technical University",
       "sport": "Ski Mountaineering",
@@ -134,7 +143,8 @@ class _HomePageWithNavbarState extends State<HomePage> {
       "gold": 9,
       "silver": 2,
       "bronze": 0,
-    }, {
+    },
+    {
       "name": "Jagdish Prasad",
       "university": "Dr. A.P.J. Abdul Kalam Technical University",
       "sport": "Ski Mountaineering",
@@ -156,7 +166,6 @@ class _HomePageWithNavbarState extends State<HomePage> {
         backgroundColor: AppColors.whiteColors,
         body: Stack(
           children: [
-
             /// 🔹 Scrollable Content
             Column(
               children: [
@@ -167,11 +176,11 @@ class _HomePageWithNavbarState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Column(
                         children: [
-
-                          SizedBox(height: 20,),
+                          SizedBox(
+                            height: 20,
+                          ),
                           Row(
                             children: [
-
                               /// Profile Image
                               Container(
                                 width: 40,
@@ -179,7 +188,8 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   image: const DecorationImage(
-                                    image: AssetImage("assets/images/profile_image.png"),
+                                    image: AssetImage(
+                                        "assets/images/profile_image.png"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -190,18 +200,21 @@ class _HomePageWithNavbarState extends State<HomePage> {
                               /// Hello Text
                               Expanded(
                                 child: RichText(
-                                  text:  TextSpan(
+                                  text: TextSpan(
                                     children: [
                                       TextSpan(
                                           text: "Hello   ",
-                                          style:FTextStyle.privacyDecTxt.copyWith(color: AppColors.textPrimary,)
-                                      ),
+                                          style:
+                                              FTextStyle.privacyDecTxt.copyWith(
+                                            color: AppColors.textPrimary,
+                                          )),
                                       TextSpan(
                                         text: "Johnson!",
-                                        style: TextStyle(
+                                        style: FTextStyle.headingTxtPrimary
+                                            .copyWith(
                                           fontSize: 22,
                                           fontWeight: FontWeight.bold,
-                                          color: Color(0xFF2E3142),
+                                          color: AppColors.appBarTitle,
                                         ),
                                       ),
                                     ],
@@ -242,10 +255,10 @@ class _HomePageWithNavbarState extends State<HomePage> {
                               ),
                             ],
                           ),
+
                           /// 🔹 Responsive Card
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20),
+                            padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Container(
                               height: screenHeight * 0.25,
                               width: double.infinity,
@@ -254,7 +267,6 @@ class _HomePageWithNavbarState extends State<HomePage> {
                               ),
                               child: Stack(
                                 children: [
-
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
                                     child: Image.asset(
@@ -264,7 +276,6 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                       height: double.infinity,
                                     ),
                                   ),
-
                                   Padding(
                                     padding: EdgeInsets.all(screenWidth * 0.04),
                                     child: Row(
@@ -272,39 +283,35 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                         Expanded(
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                             children: [
                                               Image.asset(
                                                 homepage["card"]["gamesLogo"],
-                                                height:
-                                                screenHeight * 0.07,
+                                                height: screenHeight * 0.07,
                                               ),
-                                              SizedBox(height: 10,),
-                                              Text(
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              TrText(
                                                 homepage["card"]["gameName"],
                                                 maxLines: 2,
-                                                overflow:
-                                                TextOverflow.ellipsis,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: FTextStyle.heading,
                                               ),
                                               SizedBox(
-                                                  height:
-                                                  screenHeight * 0.01),
-                                              Text(
-                                                homepage["card"]
-                                                ["gamesDate"],
-                                                style:
-                                                FTextStyle.subHeading,
+                                                  height: screenHeight * 0.01),
+                                              TrText(
+                                                homepage["card"]["gamesDate"],
+                                                style: FTextStyle.subHeading,
                                               ),
                                             ],
                                           ),
                                         ),
                                         Image.asset(
                                           homepage["card"]["mascots"],
-                                          height:
-                                          screenHeight * 0.18,
+                                          height: screenHeight * 0.18,
                                         ),
                                       ],
                                     ),
@@ -317,7 +324,7 @@ class _HomePageWithNavbarState extends State<HomePage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              TrText(
                                 "For you",
                                 style: FTextStyle.textSecBlackStylePrimary,
                               ),
@@ -326,8 +333,11 @@ class _HomePageWithNavbarState extends State<HomePage> {
                               GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: menuItems.length >= 4 ? 4 : menuItems.length,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                itemCount: menuItems.length >= 4
+                                    ? 4
+                                    : menuItems.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 4,
                                   crossAxisSpacing: 9,
                                   mainAxisSpacing: 8,
@@ -337,20 +347,22 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                   final item = menuItems[index];
 
                                   return GestureDetector(
-                                    onTap: () {
-
-                                    },
+                                    onTap: () {},
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 6, horizontal: 6),
                                       decoration: BoxDecoration(
                                         color: AppColors.whiteOffColors,
                                         borderRadius: BorderRadius.circular(7),
                                       ),
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center, // ⭐ centered
-                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center, // ⭐ centered
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
                                           const SizedBox(height: 10),
+
                                           /// image zone
                                           Center(
                                             child: SizedBox(
@@ -365,7 +377,7 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                           /// text zone
                                           SizedBox(
                                             height: 28.sp,
-                                            child: Text(
+                                            child: TrText(
                                               item["label"] ?? "",
                                               textAlign: TextAlign.center,
                                               maxLines: 2,
@@ -379,15 +391,18 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                   );
                                 },
                               ),
-                              SizedBox(height: 30,),
-                              Text(
+                              SizedBox(
+                                height: 30,
+                              ),
+                              TrText(
                                 "Explore Games",
                                 style: FTextStyle.textSecBlackStylePrimary,
                               ),
-                              SizedBox(height: 20,),
+                              SizedBox(
+                                height: 20,
+                              ),
                               Wrap(
                                 alignment: WrapAlignment.start,
-
                                 runAlignment: WrapAlignment.start,
                                 spacing: 5,
                                 runSpacing: 10,
@@ -397,11 +412,15 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25),
                                       gradient: const LinearGradient(
-                                        colors: [Color(0xFF37003C), Color(0xFFD967B1)],
+                                        colors: [
+                                          Color(0xFF37003C),
+                                          Color(0xFFD967B1)
+                                        ],
                                       ),
                                     ),
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 8),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(24),
@@ -419,7 +438,7 @@ class _HomePageWithNavbarState extends State<HomePage> {
 
                                           const SizedBox(width: 8),
 
-                                          Text(
+                                          TrText(
                                             item["title"],
                                             style: FTextStyle.chipText,
                                           ),
@@ -429,26 +448,34 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                   );
                                 }).toList(),
                               ),
-                              SizedBox(height: 30,),
+                              SizedBox(
+                                height: 30,
+                              ),
 
                               ///Featured Sports
-                              Text(
+                              TrText(
                                 "Featured Sports ",
                                 style: FTextStyle.textSecBlackStylePrimary,
                               ),
-                              SizedBox(height: 20,),
                               SizedBox(
-                                height: MediaQuery.of(context).size.width * .4, // ⭐ little more breathing space
+                                height: 20,
+                              ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.width *
+                                    .4, // ⭐ little more breathing space
 
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
-                                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 6),
                                   itemCount: sports.length,
-                                  separatorBuilder: (_, __) => const SizedBox(width: 12),
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(width: 12),
                                   itemBuilder: (context, index) {
                                     final sport = sports[index];
 
-                                    final cardWidth = MediaQuery.of(context).size.width * .4;
+                                    final cardWidth =
+                                        MediaQuery.of(context).size.width * .4;
 
                                     return Container(
                                       width: cardWidth,
@@ -461,25 +488,30 @@ class _HomePageWithNavbarState extends State<HomePage> {
 
                                         /// ⭐ exact figma border
                                         border: const Border.fromBorderSide(
-                                          BorderSide(color: Color(0xFFD9D9D9), width: 1),
+                                          BorderSide(
+                                              color: Color(0xFFD9D9D9),
+                                              width: 1),
                                         ),
 
                                         /// ⭐ exact figma shadow (VERY IMPORTANT)
                                         boxShadow: const [
                                           BoxShadow(
-                                            color: Color(0x14000000), // 8% black
+                                            color:
+                                                Color(0x14000000), // 8% black
                                             offset: Offset(3, 1),
                                             blurRadius: 7,
                                             spreadRadius: 0,
                                           ),
                                         ],
                                       ),
-
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           const SizedBox(height: 6),
+
                                           /// ⭐ icon
                                           Container(
                                             height: 44.sp,
@@ -498,7 +530,7 @@ class _HomePageWithNavbarState extends State<HomePage> {
 
                                           const Spacer(), // ⭐ auto spacing like figma
 
-                                          Text(
+                                          TrText(
                                             sport["title"],
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -508,8 +540,10 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                           const SizedBox(height: 6),
 
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Image.asset(
                                                 "assets/images/schedule.png",
@@ -517,13 +551,13 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                                 width: 10.sp,
                                               ),
                                               const SizedBox(width: 4),
-
                                               Expanded(
-                                                child: Text(
+                                                child: TrText(
                                                   sport["date"],
                                                   style: FTextStyle.datePicker,
                                                   maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             ],
@@ -535,33 +569,44 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                   },
                                 ),
                               ),
-                              SizedBox(height: 30,),
+                              SizedBox(
+                                height: 30,
+                              ),
+
                               ///Event News
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  TrText(
                                     "Event News",
                                     style: FTextStyle.textSecBlackStylePrimary,
-                                  ),Text(
+                                  ),
+                                  TrText(
                                     "View All",
                                     style: FTextStyle.privacyPolicyTxtStyle,
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 20,),
+                              SizedBox(
+                                height: 20,
+                              ),
                               SizedBox(
                                 height: MediaQuery.of(context).size.width * .52,
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
-                                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 2),
                                   itemCount: newsList.take(2).length,
-                                  separatorBuilder: (_, __) => const SizedBox(width: 12),
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(width: 12),
                                   itemBuilder: (context, index) {
                                     final news = newsList[index];
 
-                                    final cardWidth = MediaQuery.of(context).size.width * 0.45;
+                                    final cardWidth =
+                                        MediaQuery.of(context).size.width *
+                                            0.45;
                                     final cardHeight = cardWidth * 1.06;
 
                                     return Container(
@@ -579,66 +624,107 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                           ),
                                         ],
                                       ),
-
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-
                                           /// ⭐ IMAGE WITH FALLBACK
                                           Center(
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(10),
-                                              child: news["image"] != null && news["image"].toString().isNotEmpty
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: news["image"] != null &&
+                                                      news["image"]
+                                                          .toString()
+                                                          .isNotEmpty
                                                   ? Image.asset(
-                                                news["image"],
-                                                width: MediaQuery.of(context).size.width * 0.41,   // ⭐ 156 dynamic
-                                                height: MediaQuery.of(context).size.width * 0.26,  // ⭐ 100 dynamic
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (_, __, ___) => Container(
-                                                  width: MediaQuery.of(context).size.width * 0.41,
-                                                  height: MediaQuery.of(context).size.width * 0.26,
-                                                  color: Colors.black,
-                                                ),
-                                              )
+                                                      news["image"],
+                                                      width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width *
+                                                          0.41, // ⭐ 156 dynamic
+                                                      height: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width *
+                                                          0.26, // ⭐ 100 dynamic
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder:
+                                                          (_, __, ___) =>
+                                                              Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.41,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.26,
+                                                        color: Colors.black,
+                                                      ),
+                                                    )
                                                   : Container(
-                                                width: MediaQuery.of(context).size.width * 0.41,
-                                                height: MediaQuery.of(context).size.width * 0.26,
-                                                color: Colors.black,
-                                              ),
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.41,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.26,
+                                                      color: Colors.black,
+                                                    ),
                                             ),
                                           ),
 
                                           const SizedBox(height: 10),
 
                                           /// ⭐ TITLE
-                                          Text(
+                                          TrText(
                                             news["title"],
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
-                                            style: FTextStyle.cardTileText.copyWith(fontSize: 10.sp),
+                                            style: FTextStyle.cardTileText
+                                                .copyWith(fontSize: 10.sp),
                                           ),
 
                                           const Spacer(),
 
                                           /// ⭐ EXPLORE BUTTON
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                  "Explore",
-                                                  style: FTextStyle.cardTileText.copyWith(fontSize: 10.sp,color: AppColors.primaryColor)
-                                              ),
+                                              TrText("Explore",
+                                                  style: FTextStyle.cardTileText
+                                                      .copyWith(
+                                                          fontSize: 10.sp,
+                                                          color: AppColors
+                                                              .primaryColor)),
                                               const SizedBox(width: 4),
                                               Padding(
-                                                padding: const EdgeInsets.only(top: 2.0,),
-                                                child: Icon(Icons.arrow_forward_ios,
-                                                    size: 10, color: AppColors.primaryColor),
+                                                padding: const EdgeInsets.only(
+                                                  top: 2.0,
+                                                ),
+                                                child: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    size: 10,
+                                                    color:
+                                                        AppColors.primaryColor),
                                               ),
                                             ],
                                           ),
 
-                                          SizedBox(height: 8,)
+                                          SizedBox(
+                                            height: 8,
+                                          )
                                         ],
                                       ),
                                     );
@@ -646,15 +732,18 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                 ),
                               ),
 
+                              SizedBox(
+                                height: 30,
+                              ),
 
-                              SizedBox(height: 30,),
                               ///Medalist
 
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  TrText(
                                     "Top Medalists",
                                     style: FTextStyle.textSecBlackStylePrimary,
                                   ),
@@ -662,7 +751,7 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                     onTap: () {
                                       /// 👉 navigate next page
                                     },
-                                    child: Text(
+                                    child: TrText(
                                       "View All",
                                       style: FTextStyle.privacyPolicyTxtStyle,
                                     ),
@@ -675,9 +764,11 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                 height: listHeight,
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                   itemCount: medalists.length,
-                                  separatorBuilder: (_, __) => const SizedBox(width: 12),
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(width: 12),
                                   itemBuilder: (context, index) {
                                     final m = medalists[index];
 
@@ -688,39 +779,47 @@ class _HomePageWithNavbarState extends State<HomePage> {
 
                                     return Container(
                                       width: cardWidth,
-                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 10),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         gradient: const LinearGradient(
                                           begin: Alignment.topLeft,
                                           end: Alignment.bottomRight,
-                                          colors: [Color(0xFF4A014F), Color(0xFF7A0B63)],
+                                          colors: [
+                                            Color(0xFF4A014F),
+                                            Color(0xFF7A0B63)
+                                          ],
                                         ),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(.18),
+                                            color:
+                                                Colors.black.withOpacity(.18),
                                             blurRadius: 18,
                                             offset: const Offset(0, 8),
                                           ),
                                         ],
                                       ),
-
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-
                                           /// 🔥 TOP ROW
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               ClipRRect(
-                                                borderRadius: BorderRadius.circular(12),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
                                                 child: Container(
                                                   height: imageHeight,
                                                   width: imageHeight,
                                                   color: Colors.white,
-                                                  child: (m["image"] != null && m["image"] != "")
-                                                      ? Image.asset(m["image"], fit: BoxFit.cover)
+                                                  child: (m["image"] != null &&
+                                                          m["image"] != "")
+                                                      ? Image.asset(m["image"],
+                                                          fit: BoxFit.cover)
                                                       : null,
                                                 ),
                                               ),
@@ -730,13 +829,20 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                               /// ⭐ Expanded prevents overflow
                                               Expanded(
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    _medal("assets/images/gold.png", m["gold"]),
+                                                    _medal(
+                                                        "assets/images/gold.png",
+                                                        m["gold"]),
                                                     const SizedBox(height: 6),
-                                                    _medal("assets/images/silver.png", m["silver"]),
+                                                    _medal(
+                                                        "assets/images/silver.png",
+                                                        m["silver"]),
                                                     const SizedBox(height: 6),
-                                                    _medal("assets/images/bronze.png", m["bronze"]),
+                                                    _medal(
+                                                        "assets/images/bronze.png",
+                                                        m["bronze"]),
                                                   ],
                                                 ),
                                               ),
@@ -746,7 +852,7 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                           const SizedBox(height: 8),
 
                                           /// NAME
-                                          Text(
+                                          TrText(
                                             m["name"],
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
@@ -759,25 +865,30 @@ class _HomePageWithNavbarState extends State<HomePage> {
                                           const SizedBox(height: 4),
 
                                           /// UNIVERSITY
-                                          Text(
+                                          TrText(
                                             m["university"],
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: FTextStyle.medalSub,
                                           ),
 
-                                          const Spacer(), /// ⭐ VERY IMPORTANT
+                                          const Spacer(),
+
+                                          /// ⭐ VERY IMPORTANT
 
                                           /// SPORT PILL
                                           Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 4),
                                             decoration: BoxDecoration(
                                               color: Colors.white,
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                             ),
-                                            child: Text(
+                                            child: TrText(
                                               m["sport"],
-                                              style: FTextStyle.navbarSelected.copyWith(
+                                              style: FTextStyle.navbarSelected
+                                                  .copyWith(
                                                 fontSize: 10,
                                                 color: AppColors.primaryColor,
                                               ),
@@ -900,25 +1011,16 @@ class _HomePageWithNavbarState extends State<HomePage> {
                             ],
                           ),
 
-
-
-
-
-
                           Container(
                             height: 40,
                             decoration: BoxDecoration(
                               color: Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(12),
                             ),
-
-
-                            child:Column(
-                              children: [
-
-                              ],
-                            ) ,)
-                          ,
+                            child: Column(
+                              children: [],
+                            ),
+                          ),
                           // Container(
                           //   height: 600,
                           //   color: Colors.transparent,
@@ -930,12 +1032,6 @@ class _HomePageWithNavbarState extends State<HomePage> {
                 ),
               ],
             ),
-
-
-
-
-
-
 
             /// 🔹 Bottom Grey Gradient (Above Navbar)
             Positioned(
@@ -961,11 +1057,10 @@ class _HomePageWithNavbarState extends State<HomePage> {
             ),
           ],
         ),
-
-
       ),
     );
   }
+
   Widget _medal(String image, int count) {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -977,13 +1072,12 @@ class _HomePageWithNavbarState extends State<HomePage> {
           fit: BoxFit.contain,
         ),
         const SizedBox(width: 4),
-        Text(
+        TrText(
           count.toString().padLeft(2, '0'),
-          style: const TextStyle(
-            color: Colors.white,
+          style: FTextStyle.medalSub.copyWith(
+            color: AppColors.whiteColors,
             fontWeight: FontWeight.w600,
             fontSize: 11,
-            fontFamily: "Montserrat",
           ),
         )
       ],
@@ -1017,5 +1111,4 @@ class _HomePageWithNavbarState extends State<HomePage> {
   //       break;
   //   }
   // }
-
 }

@@ -62,6 +62,12 @@
       "languageVersion": "3.6"
     },
     {
+      "name": "bloc",
+      "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/bloc-9.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
@@ -168,6 +174,12 @@
       "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/flutter_animate-4.5.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_bloc",
+      "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/flutter_bloc-9.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "flutter_lints",
@@ -284,6 +296,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "nested",
+      "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/nested-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "nm",
       "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/nm-0.5.0",
       "packageUri": "lib/",
@@ -348,6 +366,12 @@
       "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/provider-6.1.5+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "shared_preferences",
@@ -500,6 +524,30 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "webview_flutter",
+      "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/webview_flutter-4.13.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "webview_flutter_android",
+      "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/webview_flutter_android-4.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "webview_flutter_platform_interface",
+      "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/webview_flutter_platform_interface-2.14.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "webview_flutter_wkwebview",
+      "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.23.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
       "name": "xdg_directories",
       "rootUri": "file:///Users/mehnaj/.pub-cache/hosted/pub.dev/xdg_directories-1.1.0",
       "packageUri": "lib/",
@@ -518,7 +566,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2026-03-03T06:54:53.991052Z",
+  "generated": "2026-03-11T05:01:18.366492Z",
   "generator": "pub",
   "generatorVersion": "3.6.0",
   "flutterRoot": "file:///Users/mehnaj/development/flutter",

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gms_application/core/constants/themes_colors.dart';
 import 'package:gms_application/core/widgets/app_bar_view.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 
 class FeedbackScreen extends StatelessWidget {
   const FeedbackScreen({super.key});
@@ -11,13 +13,12 @@ class FeedbackScreen extends StatelessWidget {
         title: "Feedback",
         showBack: true,
         showNotification: true,
-        backgroundColor: Colors.white,
-        showBottomDivider: false,
+        backgroundColor: AppColors.whiteColors,
+        showBottomDivider: true,
       ),
       body: Center(
-        child: Text("Feedback (coming soon)"),
+        child: TrText("Feedback (coming soon)"),
       ),
     );
   }
 }
-

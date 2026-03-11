@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 import 'package:gms_application/presentation/pages/splash_screen.dart';
 
 Future<void> main() async {
@@ -16,6 +17,8 @@ Future<void> main() async {
     ),
   );
 
+  await SimpleTranslator.instance.init();
+
   runApp(const MyApp());
 }
 
@@ -24,7 +27,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: false,
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
               ),
           appBarTheme: const AppBarTheme(
             systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor:  AppColors.whiteColors,
+              statusBarColor: AppColors.whiteColors,
               statusBarIconBrightness: Brightness.dark,
               statusBarBrightness: Brightness.light,
             ),
@@ -61,4 +63,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

@@ -28,8 +28,10 @@ class GmsShimmer extends StatefulWidget {
   State<GmsShimmer> createState() => _GmsShimmerState();
 }
 
-class _GmsShimmerState extends State<GmsShimmer> with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(vsync: this, duration: widget.period)..repeat();
+class _GmsShimmerState extends State<GmsShimmer>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c =
+      AnimationController(vsync: this, duration: widget.period)..repeat();
 
   @override
   void dispose() {
@@ -191,7 +193,8 @@ class ShimmerCard {
               borderRadius: BorderRadius.circular(12.r),
             ),
             SizedBox(height: 12.h),
-            const ShimmerParagraph(lines: 2, lineHeight: 12, spacing: 8, minWidthFactor: .65),
+            const ShimmerParagraph(
+                lines: 2, lineHeight: 12, spacing: 8, minWidthFactor: .65),
             SizedBox(height: 10.h),
             const ShimmerLine(height: 10, widthFactor: .35),
           ],
@@ -253,14 +256,17 @@ class ShimmerCard {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Expanded(
-              child: ShimmerParagraph(lines: 2, lineHeight: 12, spacing: 8, minWidthFactor: .7),
+              child: ShimmerParagraph(
+                  lines: 2, lineHeight: 12, spacing: 8, minWidthFactor: .7),
             ),
             SizedBox(width: 10),
-            ShimmerBox(height: 18, width: 18, borderRadius: BorderRadius.all(Radius.circular(6))),
+            ShimmerBox(
+                height: 18,
+                width: 18,
+                borderRadius: BorderRadius.all(Radius.circular(6))),
           ],
         ),
       ),
     );
   }
 }
-

@@ -13,15 +13,43 @@ class AppColors extends MaterialColor {
 
   static const Color whiteColors = Color(0xFFFFFFFF);
   static const Color whiteOffColors = Color(0xFFF6F6F6);
+  static const Color transparent = Colors.transparent;
+  static const Color black = Colors.black;
   static const Color screenBackground = Color(0xFFF8F8F8);
+  static const Color appBarTitle = Color(0xFF2A2F46);
+  static const Color appBarDivider = Color(0xFFE0E0E0);
+  static const Color appBarIconBg = Color(0xFFF3F3F3);
+  static const Color danger = Colors.red;
+  static const Color aboutImagePlaceholder = Color(0xFFC9C9C9);
+  static const Color faqSearchBg = Color(0xFFF9FAFB);
+  static const Color faqSearchBorder = Color(0xFFE5E7EB);
+  static const Color faqChipBorder = Color(0xFFD9D9D9);
+  static const Color faqCardBorder = Color(0xFFE9E9E9);
+  static const Color faqCardToggleBg = Color(0xFFF4F4F4);
+  static const Color latestNewsCardBorder = Color(0xFFEDEDED);
+  static const Color latestNewsArrowBg = Color(0xFFF2F2F2);
+  static const Color medalCountText = Color(0xFF6B3A00);
+  static const Color medalHeaderGoldBg = Color(0xFFFFF5D6);
+  static const Color medalHeaderSilverBg = Color(0xFFEFF2FF);
+  static const Color medalHeaderBronzeBg = Color(0xFFFFE3D3);
+  static const Color medalFirstGradientStart = Color(0xFFFEECAC);
+  static const Color medalSecondGradientStart = Color(0xFFE4E4E4);
+  static const Color medalThirdGradientStart = Color(0xFFF7D3B8);
+  static const Color bottomSheetHandle = Color(0xFFD3D3D3);
   static const Color scheduleCardGrey = Color(0xFFF1F2F4);
+  static const Color scheduleSectionBg = Color(0xFFF4F5F7);
   static const Color scheduleHeading = Color(0xFF20223A);
   static const Color scheduleDayText = Color(0xFF2D3044);
   static const Color scheduleMetaText = Color(0xFF61697B);
   static const Color scheduleMonthText = Color(0xFF5D6373);
+  static const Color scheduleLabelMuted = Color(0xFFA4A8B3);
   static const Color scheduleMutedText = Color(0xFF7A7E89);
   static const Color scheduleSubMutedText = Color(0xFF6E7380);
   static const Color scheduleWeekdayText = Color(0xFFA1A5B1);
+  static const Color scheduleBroadcastBorder = Color(0xFFE7E9EF);
+  static const Color scheduleCardBorder = Color(0xFFEDEFF3);
+  static const Color scheduleThumbnailBg = Color(0xFFF3F4F7);
+  static const Color scheduleInfoDivider = Color(0xFFE4E6EB);
   static const Color scheduleDateSelectedBg = Color(0xFF282E46);
   static const Color scheduleDateUnselectedBg = Color(0xFFC2C7CF);
   static const Color scheduleDateSelectedText = Color(0xFFFFFFFF);
@@ -31,8 +59,16 @@ class AppColors extends MaterialColor {
   static const Color scheduleIconMuted = Color(0xFF989BA7);
   static const Color scheduleIconEnabled = Color(0xFF2A2F40);
   static const Color scheduleIconDisabled = Color(0xFFBCC0CA);
+  static const Color scheduleAthleteLabelText = Color(0xFF787878);
+  static const Color scheduleAthletePresent = Color(0xFF399906);
+  static const Color scheduleAthleteAbsent = Color(0xFFD64545);
+  static const Color scheduleAthleteDivider = Color(0xFFD3C1C1);
   static const Color shadowLight = Color(0x12000000);
   static const Color shadowMedium = Color(0x14000000);
+  static const Color loginInputBorder = Color(0x59FFFFFF);
+  static const Color loginInputBorderFocused = Color(0xCCFFFFFF);
+  static const Color loginInputError = Color(0xFFFFC6C6);
+  static const Color loginInputFill = Color(0x1FFFFFFF);
   static const LinearGradient splashGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -56,15 +92,12 @@ class AppColors extends MaterialColor {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-
       lightPrimary,
-  lightPrimary,
-
-
+      lightPrimary,
     ],
     stops: [6.0, 9.0],
   );
-  static const LinearGradient acceptGradient =  const LinearGradient(
+  static const LinearGradient acceptGradient = const LinearGradient(
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
     colors: [
@@ -82,8 +115,8 @@ class AppColors extends MaterialColor {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-    primaryColor,
-    secondaryColor,
+      primaryColor,
+      secondaryColor,
     ],
   );
 }

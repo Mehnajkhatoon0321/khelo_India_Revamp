@@ -1,9 +1,13 @@
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
+import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
+import 'package:gms_application/core/widgets/select_competition_screen.dart';
+import 'package:gms_application/presentation/pages/bottom_navbar/data/competition_list_data.dart';
 import 'package:gms_application/presentation/pages/onboarding_screen/privacy_policy.dart';
 
 class CompetitionSelectionScreen extends StatefulWidget {
@@ -16,6 +20,9 @@ class CompetitionSelectionScreen extends StatefulWidget {
 
 class _CompetitionSelectionScreenState
     extends State<CompetitionSelectionScreen> {
+  final SimpleTranslator _translator = SimpleTranslator.instance;
+  late String _selectedDropdownLanguage;
+  int _selectedCompetitionId = selectedCompetitionIdNotifier.value;
   final PageController _pageController = PageController();
   int _currentIndex = 0;
   Timer? _timer;
@@ -23,10 +30,7 @@ class _CompetitionSelectionScreenState
   final List<String> competitionImages = [
     'assets/images/competition_second.png',
     'assets/images/comptetion.png',
-
     'assets/images/competition_third.png',
-
-
   ];
   final List<Map<String, String>> competitionNameImages = [
     {
@@ -38,16 +42,17 @@ class _CompetitionSelectionScreenState
       "gameName": "Youth Games \n 2025",
     },
     {
-
       "image": 'assets/images/khelo.png',
       "gameName": "Youth Games 2025",
     },
   ];
 
-
   @override
   void initState() {
     super.initState();
+    _selectedDropdownLanguage = SimpleTranslator.dropdownLabelForLanguage(
+      _translator.selectedLanguage.value,
+    );
 
     // Set the system UI to immersive sticky mode (full-screen)
     SystemChrome.setEnabledSystemUIMode(
@@ -90,16 +95,15 @@ class _CompetitionSelectionScreenState
       body: Stack(
         children: [
           // PURPLE BACKGROUND
-           Container(color: AppColors.primaryColor),
-           // Container(color:Color(0xFF000000)),
-
+          Container(color: AppColors.primaryColor),
+          // Container(color:Color(0xFF000000)),
 
           //  WHITE CURVE
           ClipPath(
             clipper: PerfectBottomCurveClipper(),
             child: Container(
               height: 0.48.sh,
-              color: Colors.white,
+              color: AppColors.whiteColors,
             ),
           ),
 
@@ -132,25 +136,91 @@ class _CompetitionSelectionScreenState
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
                 competitionImages.length,
-                    (i) => circularDot(i == _currentIndex),
+                (i) => circularDot(i == _currentIndex),
               ),
             ),
           ),
+
+          // Positioned(
+          //   top: MediaQuery.of(context).padding.top + 8,
+          //   left: 20.w,
+          //   right: 20.w,
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.end,
+          //     children: <Widget>[
+          //       Container(
+          //         padding: const EdgeInsets.symmetric(horizontal: 12),
+          //         decoration: BoxDecoration(
+          //           color: AppColors.whiteColors.withOpacity(0.94),
+          //           borderRadius: BorderRadius.circular(24),
+          //         ),
+          //         child: DropdownButtonHideUnderline(
+          //           child: DropdownButton<String>(
+          //             value: _selectedDropdownLanguage,
+          //             icon: const Icon(Icons.language),
+          //             items: SimpleTranslator.dropdownLanguages
+          //                 .map((String langLabel) {
+          //               return DropdownMenuItem<String>(
+          //                 value: langLabel,
+          //                 child: Text(
+          //                   langLabel,
+          //                   overflow: TextOverflow.ellipsis,
+          //                 ),
+          //               );
+          //             }).toList(),
+          //             onChanged: (String? value) async {
+          //               if (value == null) return;
+          //               setState(() {
+          //                 _selectedDropdownLanguage = value;
+          //               });
+          //
+          //               final TranslateLanguage? mlKitLanguage =
+          //                   SimpleTranslator.languageFromDropdown(value);
+          //               if (mlKitLanguage == null) {
+          //                 if (!mounted) return;
+          //                 ScaffoldMessenger.of(context).showSnackBar(
+          //                   SnackBar(
+          //                     content: Text(
+          //                       '$value is not supported by ML Kit translation yet.',
+          //                     ),
+          //                   ),
+          //                 );
+          //                 return;
+          //               }
+          //
+          //               await _translator.setLanguage(mlKitLanguage);
+          //             },
+          //           ),
+          //         ),
+          //       ),
+          //       ValueListenableBuilder<bool>(
+          //         valueListenable: _translator.isDownloadingModel,
+          //         builder: (_, downloading, __) {
+          //           if (!downloading) return const SizedBox.shrink();
+          //           return Padding(
+          //             padding: EdgeInsets.only(top: 6.h, right: 4.w),
+          //             child: const SizedBox(
+          //               width: 16,
+          //               height: 16,
+          //               child: CircularProgressIndicator(strokeWidth: 2),
+          //             ),
+          //           );
+          //         },
+          //       ),
+          //     ],
+          //   ),
+          // ),
 
           //  DESCRIPTION TEXT
           Positioned(
             top: 0.52.sh,
             left: 24.w,
             right: 24.w,
-            child: Text(
-              "Sports and fitness are vital to a healthy life. The Khelo India Programme promotes sports at the grassroots, aiming to make India a global leader in sports.",
+            child: TrText(
+              'Sports and fitness are vital to a healthy life. The Khelo India Programme promotes sports at the grassroots, aiming to make India a global leader in sports.',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12.sp,
-                height: 2,
-                fontWeight: FontWeight.w400,
-                color: Colors.white.withOpacity(0.9),
-                fontFamily: 'Montserrat',
+              style: FTextStyle.competitionDescriptionStyle.copyWith(
+                color: AppColors.whiteColors.withOpacity(0.9),
               ),
             ),
           ),
@@ -159,215 +229,62 @@ class _CompetitionSelectionScreenState
             left: 24,
             right: 24,
             child: GestureDetector(
-              onTap: (){
+              onTap: () async {
+                final int? selectedId = await openSelectCompetitionBottomSheet(
+                  context: context,
+                  selectedCompetitionId: _selectedCompetitionId,
+                  competitions: kCompetitionList,
+                );
+
+                if (!mounted || selectedId == null) return;
+                setState(() {
+                  _selectedCompetitionId = selectedId;
+                });
+                selectedCompetitionIdNotifier.value = selectedId;
+
                 Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) =>  PrivacyPolicy(),
-                                      ),
-                                    );
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PrivacyPolicy(),
+                  ),
+                );
               },
               child: Container(
                 height: 52,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.white.withOpacity(0.6)),
+                  border:
+                      Border.all(color: AppColors.whiteColors.withOpacity(0.6)),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "Select Games",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                  children: [
+                    Expanded(
+                      child: ValueListenableBuilder<TranslateLanguage>(
+                        valueListenable: _translator.selectedLanguage,
+                        builder: (_, __, ___) {
+                          return TrText(
+                            getCompetitionLabelById(_selectedCompetitionId),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: FTextStyle.competitionButtonStyle.copyWith(
+                              fontSize: 14.sp,
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                    Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white),
+                    const SizedBox(width: 8),
+                    const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: AppColors.whiteColors,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-          // Positioned(
-          //   top: 0.64.sh,
-          //   left: 10.w,
-          //   right: 10.w,
-          //   child: SizedBox(
-          //     height: 130.h,
-          //     child: Center(
-          //       child: SingleChildScrollView(
-          //         scrollDirection: Axis.horizontal,
-          //         physics: competitionNameImages.length <= 2
-          //             ? const NeverScrollableScrollPhysics()
-          //             : const BouncingScrollPhysics(),
-          //         child: Row(
-          //           mainAxisAlignment: competitionNameImages.length <= 2
-          //               ? MainAxisAlignment.center
-          //               : MainAxisAlignment.start,
-          //           children: List.generate(
-          //             competitionNameImages.length,
-          //                 (index) {
-          //               final item = competitionNameImages[index];
-          //               final count = competitionNameImages.length;
-          //
-          //               // 🎯 Dynamic width
-          //               double cardWidth;
-          //               if (count == 1) {
-          //                 cardWidth = 0.65.sw;
-          //               } else
-          //                 if (count == 2) {
-          //                 cardWidth = 0.42.sw;
-          //               } else {
-          //                 cardWidth = 125.w;
-          //               }
-          //
-          //               return GestureDetector(
-          //                 onTap: () {
-          //                   Navigator.push(
-          //                     context,
-          //                     MaterialPageRoute(
-          //                       builder: (_) =>  PrivacyPolicy(),
-          //                     ),
-          //                   );
-          //                 },
-          //                 child: Card(
-          //                   shape: RoundedRectangleBorder(
-          //                     borderRadius: BorderRadius.circular(20.r),
-          //                   ),
-          //                   elevation: count <= 2 ? 10 : 8,
-          //                   shadowColor: Colors.black.withOpacity(0.3),
-          //                   margin: EdgeInsets.symmetric(
-          //                     horizontal: count <= 2 ? 6.w : 6.w,
-          //                   ),
-          //                  child: Container(
-          //                   width: cardWidth,
-          //                   padding: EdgeInsets.all(8.w),
-          //                   child: Column(
-          //                     children: [
-          //                       // 🖼️ Fixed Image Area
-          //                       SizedBox(
-          //                         height: 70.h, // SAME for all cards
-          //                         child: Center(
-          //                           child: ClipRRect(
-          //                             borderRadius: BorderRadius.circular(30.r),
-          //                             child: Container(
-          //
-          //                               child: Padding(
-          //                                 padding: const EdgeInsets.all(18.0),
-          //                                 child: Image.asset(
-          //                                   item["image"]!,
-          //                                   height: count <= 2 ? 40.h : 40.h,
-          //                                   width: count <= 2 ? 40.w : 40.w,
-          //                                   fit: BoxFit.cover,
-          //                                 ),
-          //                               ),
-          //                             ),
-          //                           ),
-          //                         ),
-          //                       ),
-          //
-          //                       SizedBox(height: 8.h),
-          //
-          //                       // 📝 Fixed Text Start Position
-          //                       SizedBox(
-          //                         height: 32.h, // reserves space for 2 lines
-          //                         child: Align(
-          //                           alignment: Alignment.topCenter,
-          //                           child: Text(
-          //                             item["gameName"]!,
-          //                             textAlign: TextAlign.center,
-          //                             style: TextStyle(
-          //                               fontSize: 13.sp,
-          //                               fontWeight: FontWeight.w700,
-          //                               color: Colors.black.withOpacity(0.85),
-          //                             ),
-          //                             maxLines: 2,
-          //                             overflow: TextOverflow.ellipsis,
-          //                           ),
-          //                         ),
-          //                       ),
-          //                     ],
-          //                   ),
-          //                 ),
-          //
-          //               ),
-          //               );
-          //             },
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
 
-
-          // Positioned(
-          //   top: 0.64.sh,
-          //   left: 10.w,
-          //   right: 10.w,
-          //   child: SizedBox(
-          //     height: 130.h,
-          //     child: Center(
-          //       child: SingleChildScrollView(
-          //         scrollDirection: Axis.horizontal,
-          //         child: Row(
-          //           children: List.generate(
-          //             competitionNameImages.length,
-          //                 (index) {
-          //               final item = competitionNameImages[index];
-          //
-          //               return GestureDetector(
-          //                 onTap: () {
-          //                   debugPrint('Selected ${item["gameName"]}');
-          //                 },
-          //                 child: Card(
-          //                   shape: RoundedRectangleBorder(
-          //                     borderRadius: BorderRadius.circular(16.r),
-          //                   ),
-          //                   elevation: 8,
-          //                   shadowColor: Colors.black.withOpacity(0.25),
-          //                   margin: EdgeInsets.only(right: 12.w),
-          //                   child: Container(
-          //                     width: 125.w,
-          //                     padding: EdgeInsets.all(8.w),
-          //                     child: Column(
-          //                       mainAxisAlignment: MainAxisAlignment.center,
-          //                       children: [
-          //                         ClipRRect(
-          //                           borderRadius: BorderRadius.circular(12.r),
-          //                           child: Image.asset(
-          //                             item["image"]!,
-          //                             height: 70.h,
-          //                             width: 70.w,
-          //                             fit: BoxFit.cover,
-          //                           ),
-          //                         ),
-          //                         SizedBox(height: 6.h),
-          //                         Text(
-          //                           item["gameName"]!,
-          //                           textAlign: TextAlign.center,
-          //                           style: TextStyle(
-          //                             fontSize: 13.sp,
-          //                             fontWeight: FontWeight.w600,
-          //                             color: Colors.black.withOpacity(0.75),
-          //                           ),
-          //                           maxLines: 2,
-          //                           overflow: TextOverflow.ellipsis,
-          //                         ),
-          //                       ],
-          //                     ),
-          //                   ),
-          //                 ),
-          //               );
-          //             },
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
-
-          // 7️⃣ LEFT DECOR
           Positioned(
             bottom: 0,
             left: 0,
@@ -401,21 +318,21 @@ class _CompetitionSelectionScreenState
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.grey.shade700,
+          color: AppColors.scheduleMetaText,
           width: 0.5,
         ),
       ),
       child: isActive
           ? Center(
-        child: Container(
-          width: 6.w,
-          height: 6.w,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.primaryColor,
-          ),
-        ),
-      )
+              child: Container(
+                width: 6.w,
+                height: 6.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            )
           : null,
     );
   }

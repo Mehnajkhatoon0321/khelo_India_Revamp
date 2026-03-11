@@ -5,10 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gms_application/core/constants/constant_text.dart';
 import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 import 'package:gms_application/core/widgets/flutter_animation.dart';
 import 'package:gms_application/core/widgets/responsive_layout.dart';
 import 'package:gms_application/presentation/pages/bottom_navbar/bottom_navbar.dart';
 import 'package:gms_application/presentation/pages/onboarding_screen/privacy_policy_details.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
+
 class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({super.key});
 
@@ -63,47 +66,64 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                         SizedBox(height: 12.h),
 
                         /// 📝 TITLE
-                        Text(
+                        TrText(
                           Constants.privacyTitleTxt,
                           textAlign: TextAlign.center,
                           style: FTextStyle.headingTxtPrimary.copyWith(
                             fontSize: 20.sp,
                             color: AppColors.textPrimary,
                           ),
-                        )
-                            .animation
-                            .fade(duration: 500.ms),
+                        ).animation.fade(duration: 500.ms),
 
                         SizedBox(height: 17.h),
 
                         /// 📄 DESCRIPTION
-                        RichText(
-                          textAlign: TextAlign.left,
-                          text: TextSpan(
-                            style: FTextStyle.privacyDecTxt.copyWith(
-                              height: 1.93,
-                              color: AppColors.textPrimary,
-                            ),
-                            children: const [
-                              TextSpan(
-                                text:
-                                "To improve and personalize your experience and help grow the ",
-                              ),
-                              TextSpan(
-                                text: "Khelo India Movement. ",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
+                        ValueListenableBuilder<TranslateLanguage>(
+                          valueListenable:
+                              SimpleTranslator.instance.selectedLanguage,
+                          builder: (_, __, ___) {
+                            return FutureBuilder<List<String>>(
+                              future: Future.wait(<Future<String>>[
+                                tr(
+                                  'To improve and personalize your experience and help grow the ',
                                 ),
-                              ),
-                              TextSpan(
-                                text:
-                                "SAI and the organizing committees for the Khelo India Games and our partners use cookies for analytics, people insights and marketing, as described in our Cookie Policy.",
-                              ),
-                            ],
-                          ),
-                        )
-                            .animation
-                            .fade(duration: 700.ms),
+                                tr('Khelo India Movement. '),
+                                tr(
+                                  'SAI and the organizing committees for the Khelo India Games and our partners use cookies for analytics, people insights and marketing, as described in our Cookie Policy.',
+                                ),
+                              ]),
+                              builder: (context, snapshot) {
+                                final List<String> parts = snapshot.data ??
+                                    <String>[
+                                      'To improve and personalize your experience and help grow the ',
+                                      'Khelo India Movement. ',
+                                      'SAI and the organizing committees for the Khelo India Games and our partners use cookies for analytics, people insights and marketing, as described in our Cookie Policy.',
+                                    ];
+                                return RichText(
+                                  textAlign: TextAlign.left,
+                                  text: TextSpan(
+                                    style: FTextStyle.privacyDecTxt.copyWith(
+                                      height: 1.93,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(text: parts[0]),
+                                      TextSpan(
+                                        text: parts[1],
+                                        style:
+                                            FTextStyle.privacyDecTxt.copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.textPrimary,
+                                        ),
+                                      ),
+                                      TextSpan(text: parts[2]),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ).animation.fade(duration: 700.ms),
 
                         SizedBox(height: 37.h),
 
@@ -111,7 +131,9 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.r),
-                            gradient: AppColors.acceptGradient,
+                            color: AppColors.whiteColors,
+                            border:
+                                Border.all(color: AppColors.scheduleCardBorder),
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(30.r),
@@ -120,29 +142,29 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                               backgroundColor: AppColors.primaryColor,
                               toggleColor: _isSuccess
                                   ? AppColors.primaryColor
-                                  : Colors.white,
+                                  : AppColors.whiteColors,
                               icon: _isSuccess
                                   ? Icon(
-                                Icons.check,
-                                color: Colors.white,
-                              )
+                                      Icons.check,
+                                      color: AppColors.whiteColors,
+                                    )
                                   : Icon(
-                                Icons.double_arrow_outlined,
-                                color: AppColors.primaryColor,
-                              ).animation.horizontalLoop(),
-
+                                      Icons.double_arrow_outlined,
+                                      color: AppColors.primaryColor,
+                                    ).animation.horizontalLoop(),
                               successIcon: Icon(
                                 Icons.check_circle_outline,
                                 color: AppColors.whiteColors,
                               ),
                               action: (controller) async {
+                                if (_isSuccess) return;
                                 controller.success();
                                 setState(() {
                                   _isSuccess = true;
                                 });
 
                                 await Future.delayed(
-                                    const Duration(seconds: 1));
+                                    const Duration(milliseconds: 200));
 
                                 if (!mounted) return;
 
@@ -153,7 +175,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                                   ),
                                 );
                               },
-                              child: Text(
+                              child: TrText(
                                 Constants.acceptTxt.toUpperCase(),
                                 style: FTextStyle.acceptTxtStyle.copyWith(
                                   color: AppColors.whiteColors,
@@ -161,9 +183,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                               ),
                             ),
                           ),
-                        )
-                            .animation
-                            .fromBottom(duration: 900.ms),
+                        ).animation.fromBottom(duration: 900.ms),
 
                         SizedBox(height: 18.h),
 
@@ -173,22 +193,18 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) =>
-                                const PrivacyPolicyDetails(),
+                                builder: (_) => const PrivacyPolicyDetails(),
                               ),
                             );
                           },
-                          child: Text(
+                          child: TrText(
                             Constants.privacyPolicyTxt,
-                            style:
-                            FTextStyle.privacyPolicyTxtStyle.copyWith(
+                            style: FTextStyle.privacyPolicyTxtStyle.copyWith(
                               decoration: TextDecoration.underline,
                               color: AppColors.textPrimary,
                             ),
                           ),
-                        )
-                            .animation
-                            .fade(duration: 1100.ms),
+                        ).animation.fade(duration: 1100.ms),
                         SizedBox(height: 18.h),
                       ],
                     ),

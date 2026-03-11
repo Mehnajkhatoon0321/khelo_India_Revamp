@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
+
 class NoDataAvailable extends StatelessWidget {
   final String title;
   final String? subtitle;
@@ -36,7 +39,8 @@ class NoDataAvailable extends StatelessWidget {
                     AppColors.primaryColor.withOpacity(.04),
                   ],
                 ),
-                border: Border.all(color: AppColors.primaryColor.withOpacity(.10)),
+                border:
+                    Border.all(color: AppColors.primaryColor.withOpacity(.10)),
               ),
               child: Icon(
                 icon,
@@ -45,29 +49,17 @@ class NoDataAvailable extends StatelessWidget {
               ),
             ),
             SizedBox(height: 14.h),
-            Text(
+            TrText(
               sTitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: "Montserrat",
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
-                height: 1.25,
-              ),
+              style: FTextStyle.noDataTitleStyle,
             ),
             if (subtitle != null && subtitle!.trim().isNotEmpty) ...[
               SizedBox(height: 6.h),
-              Text(
+              TrText(
                 subtitle!.trim(),
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textSecondary,
-                  height: 1.4,
-                ),
+                style: FTextStyle.noDataSubtitleStyle,
               ),
             ],
           ],

@@ -70,14 +70,14 @@ class FTextStyle {
 
     decoration: TextDecoration.underline,
     decorationColor: AppColors.primaryColor, // 👈 underline color
-    decorationThickness: 1.3,               // optional (looks cleaner)
+    decorationThickness: 1.3, // optional (looks cleaner)
   );
 
   static TextStyle navbarDefault = TextStyle(
     fontSize: 11.sp,
     fontWeight: FontWeight.w600,
     fontFamily: 'Montserrat',
-    color: Colors.black,
+    color: AppColors.black,
     height: 1.13,
     letterSpacing: 0,
   );
@@ -107,18 +107,18 @@ class FTextStyle {
 
   static TextStyle chipText = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 9.sp,                 // Figma 9px
+    fontSize: 9.sp, // Figma 9px
     color: AppColors.textPrimary,
-    fontWeight: FontWeight.w500,    // Medium = 500
-    height: 1.13,                   // 113% line-height
+    fontWeight: FontWeight.w500, // Medium = 500
+    height: 1.13, // 113% line-height
     letterSpacing: 0,
   );
   static TextStyle cardTileText = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 10.sp,                 // Figma 9px
+    fontSize: 10.sp, // Figma 9px
     color: AppColors.textPrimary,
-    fontWeight: FontWeight.w600,    // ⭐ SemiBold
-    height: 1.34,                   // ⭐ 134% line-height
+    fontWeight: FontWeight.w600, // ⭐ SemiBold
+    height: 1.34, // ⭐ 134% line-height
     letterSpacing: 0,
   );
   static const TextStyle datePicker = TextStyle(
@@ -135,7 +135,7 @@ class FTextStyle {
     fontSize: 7.sp,
     height: 1.34,
     letterSpacing: 0,
-    color: Colors.white.withOpacity(.85), // ⭐ medal card par soft look
+    color: AppColors.whiteColors.withOpacity(.85), // ⭐ medal card par soft look
   );
 
   static TextStyle aboutEventTitleStyle = TextStyle(
@@ -143,7 +143,7 @@ class FTextStyle {
     fontSize: 20.sp,
     fontWeight: FontWeight.w700,
     height: 1.31,
-    color: const Color(0xFF2A2F46),
+    color: AppColors.appBarTitle,
     letterSpacing: 0,
   );
 
@@ -152,7 +152,7 @@ class FTextStyle {
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     height: 1.75,
-    color: const Color(0xFF545A67),
+    color: AppColors.scheduleMonthText,
     letterSpacing: 0,
   );
 
@@ -246,5 +246,243 @@ class FTextStyle {
     fontSize: 14.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.scheduleMetaText,
+  );
+
+  static TextStyle scheduleDetailsSportTitleStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 17.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryColor,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleDetailsMetaStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleDetailsEventTitleStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryColor,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleDetailsEventMetaStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleUnifiedHeadingStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryColor,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleAthleteNameStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryColor,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleAthleteLabelStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 9.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.scheduleAthleteLabelText,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleAthleteValueStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleAthleteKIdValueStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleAthleteStatusPresentStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.scheduleAthletePresent,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle scheduleAthleteStatusAbsentStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.scheduleAthleteAbsent,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle appBarTitleStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.appBarTitle,
+    height: 1.13,
+    letterSpacing: 0,
+  );
+
+  static TextStyle faqChipStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+    height: 1.13,
+  );
+
+  static TextStyle faqQuestionStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.textPrimary,
+    height: 1.54,
+  );
+
+  static TextStyle faqAnswerStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w300,
+    color: AppColors.answerSecondary,
+    height: 1.64,
+  );
+
+  static TextStyle latestNewsTitleStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+    height: 1.25,
+  );
+
+  static TextStyle latestNewsDateStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.primaryColor,
+  );
+
+  static TextStyle noDataTitleStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+    height: 1.25,
+  );
+
+  static TextStyle noDataSubtitleStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.textSecondary,
+    height: 1.4,
+  );
+
+  static TextStyle competitionDescriptionStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    height: 2,
+    color: AppColors.whiteColors,
+  );
+
+  static TextStyle competitionButtonStyle = TextStyle(
+    fontFamily: "Montserrat",
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteColors,
+  );
+
+  // Login screen
+  static TextStyle loginTitleStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 34.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColors,
+    height: 1.2,
+    letterSpacing: -0.5,
+  );
+
+  static TextStyle loginSubtitleStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+    color: Colors.white70,
+    height: 1.5,
+  );
+
+  static TextStyle loginInputStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteOffColors,
+    height: 1.22,
+  );
+
+  static TextStyle loginHintStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w500,
+    color: Colors.white70,
+    height: 1.3,
+  );
+
+  static TextStyle loginRememberMeStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteColors,
+    height: 1.5,
+  );
+
+  static TextStyle loginForgotPasswordStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteColors,
+    decoration: TextDecoration.underline,
+    decorationColor: AppColors.whiteColors,
+    decorationThickness: 1.5,
+  );
+
+  static TextStyle loginButtonStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    height: 1.3,
+    letterSpacing: 0.3,
   );
 }

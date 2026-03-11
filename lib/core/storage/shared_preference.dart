@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
-
   static SharedPreferences? prefs;
 
   static Future<bool> init() async {
@@ -71,6 +70,7 @@ class Prefs {
   static String getAccountType() {
     return prefs?.getString('account_type') ?? '';
   }
+
   static void setCategory(int value) {
     Prefs.prefs?.setInt('category', value);
   }
@@ -79,6 +79,4 @@ class Prefs {
     final int? value = Prefs.prefs?.getInt('category');
     return value ?? 0; // Return 0 if no value is found
   }
-
-
 }

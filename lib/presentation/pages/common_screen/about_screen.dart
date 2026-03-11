@@ -5,6 +5,7 @@ import 'package:gms_application/core/constants/themes_colors.dart';
 import 'package:gms_application/core/constants/themes_height_width.dart';
 import 'package:gms_application/core/widgets/app_bar_view.dart';
 import 'package:gms_application/core/widgets/responsive_layout.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -26,7 +27,7 @@ class _AboutScreenState extends State<AboutScreen> {
         title: Constants.aboutTitle,
         showNotification: true,
         backgroundColor: AppColors.whiteColors,
-        showBottomDivider: false,
+        showBottomDivider: true,
       ),
       body: SafeArea(
         top: false,
@@ -45,9 +46,10 @@ class _AboutScreenState extends State<AboutScreen> {
                 children: [
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      final double imageWidth = constraints.maxWidth < _imageCardWidth
-                          ? constraints.maxWidth
-                          : _imageCardWidth;
+                      final double imageWidth =
+                          constraints.maxWidth < _imageCardWidth
+                              ? constraints.maxWidth
+                              : _imageCardWidth;
                       return Center(
                         child: Container(
                           width: imageWidth,
@@ -66,7 +68,7 @@ class _AboutScreenState extends State<AboutScreen> {
                           child: const Center(
                             child: Icon(
                               Icons.image_outlined,
-                              color: Color(0xFFC9C9C9),
+                              color: AppColors.aboutImagePlaceholder,
                               size: 72,
                             ),
                           ),
@@ -75,7 +77,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     },
                   ),
                   SizedBoxConstant.heightSpace_40,
-                  Text(
+                  TrText(
                     Constants.aboutEventTitle,
                     style: FTextStyle.aboutEventTitleStyle,
                   ),
@@ -89,7 +91,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                   ),
                   SizedBoxConstant.heightSpace_15,
-                  Text(
+                  TrText(
                     Constants.aboutEventDescription,
                     style: FTextStyle.aboutEventDescriptionStyle,
                   ),

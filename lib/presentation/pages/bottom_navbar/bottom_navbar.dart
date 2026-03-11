@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/widgets/common_exit_popup.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 import 'package:gms_application/presentation/pages/bottom_navbar/home_page.dart';
 import 'package:gms_application/presentation/pages/bottom_navbar/medal_tally/medal_tally.dart';
-import 'package:gms_application/presentation/pages/bottom_navbar/schedule.dart';
-import 'package:gms_application/presentation/pages/bottom_navbar/venue.dart';
+import 'package:gms_application/presentation/pages/bottom_navbar/schedule/schedule.dart';
+import 'package:gms_application/presentation/pages/auth_flow/stakeholder_login_screen.dart';
 
 class BottomNavItem {
   final String label;
@@ -54,16 +57,27 @@ class _BottomNavbarState extends State<BottomNavbar> {
         image: "assets/images/venue.png",
         selectedImage: "assets/images/venue.png",
         page: MedalTallyScreen(),
-      ), BottomNavItem(
+      ),
+      BottomNavItem(
         label: "Log In",
         image: "assets/images/login.png",
         selectedImage: "assets/images/login.png",
-        page: HomePage(),
+        page: StakeholderLoginScreen(),
       ),
     ];
   }
 
-  void onItemTap(int index) {
+  Future<void> onItemTap(int index) async {
+    if (index == 3) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const StakeholderLoginScreen(),
+        ),
+      );
+      return;
+    }
+
     if (selectedIndex == index) return;
 
     setState(() {
@@ -71,27 +85,54 @@ class _BottomNavbarState extends State<BottomNavbar> {
     });
   }
 
+  Future<bool> _showExitDialog() async {
+    return showCommonExitPopup(
+      context: context,
+      title: 'Exit App?',
+      message: 'Are you sure you want to exit?',
+      cancelText: 'Cancel',
+      confirmText: 'Okay',
+    );
+  }
+
+  Future<void> _handleBackPress() async {
+    if (selectedIndex != 0) {
+      setState(() {
+        selectedIndex = 0;
+      });
+      return;
+    }
+    final bool shouldExit = await _showExitDialog();
+    if (shouldExit) {
+      await SystemNavigator.pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final navBarHeight = (screenHeight * 0.085).clamp(64.0, 84.0);
 
-    return Scaffold(
-      body: IndexedStack(
-        index: selectedIndex,
-        children: navItems.map((item) => item.page).toList(),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          height: navBarHeight,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: Row(
-            children: List.generate(
-              navItems.length,
-                  (index) => Expanded(
-                child: _buildNavItem(context, index),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (_, __) => _handleBackPress(),
+      child: Scaffold(
+        body: IndexedStack(
+          index: selectedIndex,
+          children: navItems.take(3).map((item) => item.page).toList(),
+        ),
+        bottomNavigationBar: SafeArea(
+          child: Container(
+            height: navBarHeight,
+            decoration: const BoxDecoration(
+              color: AppColors.whiteColors,
+            ),
+            child: Row(
+              children: List.generate(
+                navItems.length,
+                (index) => Expanded(
+                  child: _buildNavItem(context, index),
+                ),
               ),
             ),
           ),
@@ -105,13 +146,16 @@ class _BottomNavbarState extends State<BottomNavbar> {
     final bool isSelected = selectedIndex == index;
 
     final screenWidth = MediaQuery.of(context).size.width;
-    final iconSize = (screenWidth * (isSelected ? 0.052 : 0.043)).clamp(18.0, 24.0);
+    final iconSize =
+        (screenWidth * (isSelected ? 0.052 : 0.043)).clamp(18.0, 24.0);
     final indicatorWidth = (screenWidth * 0.15).clamp(44.0, 84.0);
     final topGap = (screenWidth * 0.03).clamp(8.0, 14.0);
     final labelGap = (screenWidth * 0.022).clamp(6.0, 10.0);
 
     return InkWell(
-      onTap: () => onItemTap(index),
+      onTap: () {
+        onItemTap(index);
+      },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -120,9 +164,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
             duration: const Duration(milliseconds: 250),
             height: 3,
             width: indicatorWidth,
-            color: isSelected
-                ? AppColors.primaryColor
-                : Colors.transparent,
+            color: isSelected ? AppColors.primaryColor : AppColors.transparent,
           ),
 
           SizedBox(height: topGap),
@@ -132,22 +174,18 @@ class _BottomNavbarState extends State<BottomNavbar> {
             height: iconSize,
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                isSelected
-                    ? AppColors.primaryColor
-                    : Colors.black,
+                isSelected ? AppColors.primaryColor : AppColors.black,
                 BlendMode.srcIn,
               ),
               child: isSelected
-                  ?
-              Image.asset(
-                 item.selectedImage,
-
-                fit: BoxFit.contain,
-              ): Image.asset(
-                item.image,
-
-                fit: BoxFit.contain,
-              ),
+                  ? Image.asset(
+                      item.selectedImage,
+                      fit: BoxFit.contain,
+                    )
+                  : Image.asset(
+                      item.image,
+                      fit: BoxFit.contain,
+                    ),
             ),
           ),
 
@@ -155,7 +193,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
           /// 🔹 Responsive Text
           Flexible(
-            child: Text(
+            child: TrText(
               item.label,
               overflow: TextOverflow.ellipsis,
               style: isSelected

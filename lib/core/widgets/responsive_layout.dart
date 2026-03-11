@@ -33,14 +33,16 @@ class ResponsiveContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectivePadding =
-        padding ?? EdgeInsets.symmetric(horizontal: ResponsiveLayout.adaptiveHorizontalPadding(context));
+    final effectivePadding = padding ??
+        EdgeInsets.symmetric(
+            horizontal: ResponsiveLayout.adaptiveHorizontalPadding(context));
 
     return Align(
       alignment: alignment,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: maxWidth ?? ResponsiveLayout.adaptiveMaxContentWidth(context),
+          maxWidth:
+              maxWidth ?? ResponsiveLayout.adaptiveMaxContentWidth(context),
         ),
         child: Padding(
           padding: effectivePadding,

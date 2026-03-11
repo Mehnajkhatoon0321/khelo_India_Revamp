@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -20,7 +23,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.toolbarHeight,
     this.showBottomDivider = true,
-    this.backgroundColor = const Color(0xFFF8F8F8),
+    this.backgroundColor = AppColors.screenBackground,
     this.dividerTopSpacing = 10,
   });
 
@@ -41,7 +44,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
       ),
-
       leading: showBack
           ? Padding(
               padding: const EdgeInsets.only(left: 15),
@@ -51,21 +53,12 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             )
           : null,
-
-      title: Text(
+      title: TrText(
         title,
-        style: const TextStyle(
-          color: Color(0xFF2A2F46),
-          fontFamily: "Montserrat",
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          height: 1.13,
-          letterSpacing: 0,
-        ),
+        style: FTextStyle.appBarTitleStyle.copyWith(fontSize: 16.sp),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-
       actions: actions ??
           [
             if (showNotification)
@@ -84,7 +77,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   const Divider(
                     height: 0,
                     thickness: 0.5,
-                    color: Color(0xFFE0E0E0),
+                    color: AppColors.appBarDivider,
                   ),
                 ],
               ),
@@ -94,8 +87,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize =>
-      Size.fromHeight(
+  Size get preferredSize => Size.fromHeight(
         (toolbarHeight ?? 56) +
             (showBottomDivider ? (dividerTopSpacing + 0.5) : 0),
       );
@@ -113,7 +105,7 @@ class _CircleIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFFF3F3F3),
+      color: AppColors.appBarIconBg,
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
@@ -123,7 +115,7 @@ class _CircleIconButton extends StatelessWidget {
           width: 42,
           child: Icon(
             Icons.arrow_back,
-            color: const Color(0xFF2A2F46),
+            color: AppColors.appBarTitle,
             size: 18,
           ),
         ),
@@ -140,7 +132,7 @@ class _NotificationButton extends StatelessWidget {
     return Stack(
       children: [
         Material(
-          color: const Color(0xFFF3F3F3),
+          color: AppColors.appBarIconBg,
           shape: const CircleBorder(),
           child: InkWell(
             customBorder: const CircleBorder(),
@@ -150,7 +142,7 @@ class _NotificationButton extends StatelessWidget {
               width: 42,
               child: Icon(
                 Icons.notifications_outlined,
-                color: Color(0xFF2A2F46),
+                color: AppColors.appBarTitle,
                 size: 24,
               ),
             ),
@@ -162,7 +154,8 @@ class _NotificationButton extends StatelessWidget {
           child: Container(
             height: 8,
             width: 8,
-            decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+            decoration: const BoxDecoration(
+                color: AppColors.danger, shape: BoxShape.circle),
           ),
         ),
       ],

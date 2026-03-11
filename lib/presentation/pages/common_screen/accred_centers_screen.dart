@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gms_application/core/constants/themes_colors.dart';
 import 'package:gms_application/core/widgets/app_bar_view.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 
 class AccredCentersScreen extends StatelessWidget {
   const AccredCentersScreen({super.key});
@@ -11,13 +13,12 @@ class AccredCentersScreen extends StatelessWidget {
         title: "Accred Centers",
         showBack: true,
         showNotification: true,
-        backgroundColor: Colors.white,
-        showBottomDivider: false,
+        backgroundColor: AppColors.whiteColors,
+        showBottomDivider: true,
       ),
       body: Center(
-        child: Text("Accred Centers (coming soon)"),
+        child: TrText("Accred Centers (coming soon)"),
       ),
     );
   }
 }
-

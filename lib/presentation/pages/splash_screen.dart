@@ -3,6 +3,7 @@ import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
 import 'package:gms_application/core/constants/themes_height_width.dart';
 import 'package:gms_application/core/widgets/flutter_animation.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 import 'package:gms_application/presentation/pages/onboarding_screen/competition_selection_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) =>  CompetitionSelectionScreen(),
+          builder: (_) => CompetitionSelectionScreen(),
         ),
       );
     });
@@ -44,12 +45,12 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              TrText(
                 "Khelo India Games",
                 style: FTextStyle.headingTxtPrimary,
               ).animation.fadeScale(),
               SizedBoxConstant.heightSpace_8,
-              Text(
+              TrText(
                 "TRIUMPH OF WILL AMPLIFIED BY ALGORITHMS",
                 style: FTextStyle.textStylePrimary,
               ).animation.fadeScale(),

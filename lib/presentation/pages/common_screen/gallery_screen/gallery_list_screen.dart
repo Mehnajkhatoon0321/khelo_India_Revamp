@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:gms_application/core/constants/fonts_text_style.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/utils/simple_translator.dart';
 
 class CompetitionSelectionScreen extends StatefulWidget {
   const CompetitionSelectionScreen({super.key});
@@ -12,7 +14,6 @@ class CompetitionSelectionScreen extends StatefulWidget {
 
 class _CompetitionSelectionScreenState
     extends State<CompetitionSelectionScreen> {
-
   final PageController _pageController = PageController();
   int _currentIndex = 0;
   Timer? _timer;
@@ -60,7 +61,6 @@ class _CompetitionSelectionScreenState
     return Scaffold(
       body: Stack(
         children: [
-
           /// 1️⃣ PURPLE FULL BACKGROUND (BASE)
           Container(
             color: AppColors.primaryColor,
@@ -71,7 +71,7 @@ class _CompetitionSelectionScreenState
             clipper: PerfectBottomCurveClipper(),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.48,
-              color: Colors.white,
+              color: AppColors.whiteColors,
             ),
           ),
 
@@ -104,7 +104,7 @@ class _CompetitionSelectionScreenState
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
                 competitionImages.length,
-                    (i) => circularDot(i == _currentIndex),
+                (i) => circularDot(i == _currentIndex),
               ),
             ),
           ),
@@ -114,19 +114,16 @@ class _CompetitionSelectionScreenState
             top: MediaQuery.of(context).size.height * 0.50,
             left: 24,
             right: 24,
-            child: Text(
+            child: TrText(
               "The Importance of Sports and fitness in one's life is invaluable. "
-                  "A fit and healthy individual leads to an equally healthy society "
-                  "and strong nation. The Khelo India Programme has been introduced "
-                  "to revive the sports culture in India at the grass-root level by "
-                  "building a strong framework for all sports & establish India a "
-                  "Great Sporting Nation.",
+              "A fit and healthy individual leads to an equally healthy society "
+              "and strong nation. The Khelo India Programme has been introduced "
+              "to revive the sports culture in India at the grass-root level by "
+              "building a strong framework for all sports & establish India a "
+              "Great Sporting Nation.",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                height: 2.03,
-                color: Colors.white.withOpacity(0.9),
-                fontFamily: 'Montserrat',
+              style: FTextStyle.competitionDescriptionStyle.copyWith(
+                color: AppColors.whiteColors.withOpacity(0.9),
               ),
             ),
           ),
@@ -141,16 +138,20 @@ class _CompetitionSelectionScreenState
               padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Colors.white.withOpacity(0.6)),
+                border:
+                    Border.all(color: AppColors.whiteColors.withOpacity(0.6)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  TrText(
                     "Select Games",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: FTextStyle.competitionButtonStyle,
                   ),
-                  Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white),
+                  const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.whiteColors,
+                  ),
                 ],
               ),
             ),
@@ -167,8 +168,6 @@ class _CompetitionSelectionScreenState
                 fit: BoxFit.contain,
               ),
             ),
-
-
           ),
 
           /// 8️⃣ BOTTOM RIGHT DECOR
@@ -183,7 +182,6 @@ class _CompetitionSelectionScreenState
         ],
       ),
     );
-
   }
 
   /// CIRCULAR BORDER INDICATOR (MATCHES IMAGE)
@@ -196,25 +194,24 @@ class _CompetitionSelectionScreenState
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.grey.shade700,
+          color: AppColors.scheduleMetaText,
           width: 0.5, // 👈 exact Figma border
         ),
       ),
       child: isActive
           ? Center(
-        child: Container(
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.primaryColor,
-          ),
-        ),
-      )
+              child: Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            )
           : null,
     );
   }
-
 }
 
 /// CURVE CLIPPER (UNCHANGED)
