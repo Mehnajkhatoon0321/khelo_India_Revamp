@@ -24,13 +24,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   void initState() {
     super.initState();
-    final url = Constants.forgotPasswordUrl;
-    setState(() => _forgotPasswordUrl = url);
-    if (url != null && url.isNotEmpty) {
-      _initWebView(url);
-    } else {
-      setState(() => _isLoading = false);
-    }
+
   }
 
   void _initWebView(String url) {

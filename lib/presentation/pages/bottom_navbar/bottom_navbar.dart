@@ -8,6 +8,7 @@ import 'package:gms_application/presentation/pages/bottom_navbar/home_page.dart'
 import 'package:gms_application/presentation/pages/bottom_navbar/medal_tally/medal_tally.dart';
 import 'package:gms_application/presentation/pages/bottom_navbar/schedule/schedule.dart';
 import 'package:gms_application/presentation/pages/auth_flow/stakeholder_login_screen.dart';
+import 'package:gms_application/presentation/pages/bottom_navbar/data/competition_list_data.dart';
 
 class BottomNavItem {
   final String label;
@@ -69,12 +70,19 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   Future<void> onItemTap(int index) async {
     if (index == 3) {
-      await Navigator.push(
+      if (isLoginNotifier.value) {
+        setState(() => selectedIndex = 0);
+        return;
+      }
+      final bool? loginSuccess = await Navigator.push<bool>(
         context,
         MaterialPageRoute(
           builder: (_) => const StakeholderLoginScreen(),
         ),
       );
+      if (loginSuccess == true && mounted) {
+        setState(() => selectedIndex = 0);
+      }
       return;
     }
 
@@ -193,13 +201,24 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
           /// 🔹 Responsive Text
           Flexible(
-            child: TrText(
-              item.label,
-              overflow: TextOverflow.ellipsis,
-              style: isSelected
-                  ? FTextStyle.navbarSelected
-                  : FTextStyle.navbarDefault,
-            ),
+            child: index == 3
+                ? ValueListenableBuilder<bool>(
+                    valueListenable: isLoginNotifier,
+                    builder: (_, isLogin, __) => TrText(
+                      isLogin ? "Profile" : item.label,
+                      overflow: TextOverflow.ellipsis,
+                      style: isSelected
+                          ? FTextStyle.navbarSelected
+                          : FTextStyle.navbarDefault,
+                    ),
+                  )
+                : TrText(
+                    item.label,
+                    overflow: TextOverflow.ellipsis,
+                    style: isSelected
+                        ? FTextStyle.navbarSelected
+                        : FTextStyle.navbarDefault,
+                  ),
           ),
         ],
       ),

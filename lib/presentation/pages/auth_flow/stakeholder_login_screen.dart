@@ -19,7 +19,7 @@ class StakeholderLoginScreen extends StatefulWidget {
 }
 
 class _StakeholderLoginScreenState extends State<StakeholderLoginScreen> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -86,7 +86,6 @@ class _StakeholderLoginScreenState extends State<StakeholderLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: AppColors.primaryColor,
       body: Stack(
         children: [
           Positioned.fill(
@@ -137,7 +136,8 @@ class _StakeholderLoginScreenState extends State<StakeholderLoginScreen> {
                                 ],
                               ),
                             ),
-                          )],
+                          ),
+                          ],
                       ),
                     ),
                   ),
@@ -285,14 +285,7 @@ class _StakeholderLoginScreenState extends State<StakeholderLoginScreen> {
                   builder: (context) =>
                       const ForgotPasswordScreen(),
                 ),
-              ).then((_) {
-                if (mounted) {
-                  setState(() {
-                    _hasTriedSubmit = false;
-                    _formKey = GlobalKey<FormState>();
-                  });
-                }
-              });
+              );
             },
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

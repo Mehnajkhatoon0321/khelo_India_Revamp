@@ -12,7 +12,9 @@ import 'package:gms_application/presentation/pages/common_screen/faq.dart';
 import 'package:gms_application/presentation/pages/common_screen/feedback_screen.dart';
 import 'package:gms_application/presentation/pages/common_screen/gallery_screen.dart';
 import 'package:gms_application/presentation/pages/common_screen/latest_news/latest_news.dart';
+import 'package:gms_application/presentation/pages/auth_flow/stakeholder_login_screen.dart';
 import 'package:gms_application/presentation/pages/common_screen/scoring_sections/scoring_screen.dart';
+import 'package:gms_application/core/storage/shared_preference.dart';
 import 'package:gms_application/presentation/pages/bottom_navbar/data/competition_list_data.dart';
 import 'package:gms_application/presentation/pages/bottom_navbar/venue.dart';
 
@@ -1233,64 +1235,131 @@ class _HomePageWithNavbarState extends State<HomePage> {
   }
 
   Widget _buildTopHeader() {
-    return Row(
-      children: [
-        Container(
-          width: 40.w,
-          height: 40.w,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            shape: BoxShape.circle,
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(6.w),
-            child: Image.asset(
-              "assets/images/login.png",
-              fit: BoxFit.contain,
-              errorBuilder: (_, __, ___) =>
-                  const Icon(Icons.content_paste, size: 18),
-            ),
-          ),
-        ),
-        SizedBox(width: 14.w),
-        Expanded(
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(text: "Welcome To ", style: FTextStyle.helloTxt),
-              ],
-            ),
-          ),
-        ),
-        Stack(
+    return ValueListenableBuilder<bool>(
+      valueListenable: isLoginNotifier,
+      builder: (context, isLogin, _) {
+        final userEmail = Prefs.getUserEmailLogin();
+        final displayName = userEmail.isNotEmpty
+            ? (userEmail.contains('@') ? userEmail.split('@').first : userEmail)
+            : 'User';
+
+        return Row(
           children: [
-            Container(
-              width: 40.w,
-              height: 40.w,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.notifications_none_rounded,
-                size: 20,
+            GestureDetector(
+              onTap: isLogin
+                  ? () async {
+                      final shouldLogout = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text('Logout'),
+                          content: const Text(
+                            'Are you sure you want to logout?',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(ctx, false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(ctx, true),
+                              child: const Text('Logout'),
+                            ),
+                          ],
+                        ),
+                      );
+                      if (shouldLogout == true && mounted) {
+                        await Prefs.setIsLogin(false);
+                        isLoginNotifier.value = false;
+                        setState(() {});
+                      }
+                    }
+                  : () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const StakeholderLoginScreen(),
+                        ),
+                      ).then((_) {
+                        if (mounted) setState(() {});
+                      });
+                    },
+              child: Container(
+                width: 40.w,
+                height: 40.w,
+                decoration: BoxDecoration(
+                  color: isLogin
+                      ? AppColors.primaryColor.withOpacity(0.2)
+                      : Colors.grey.shade200,
+                  shape: BoxShape.circle,
+                ),
+                child: isLogin
+                    ? Center(
+                        child: TrText(
+                          displayName.isNotEmpty
+                              ? displayName[0].toUpperCase()
+                              : 'U',
+                          style: FTextStyle.helloTxt.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryColor,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.all(6.w),
+                        child: Image.asset(
+                          "assets/images/login.png",
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) =>
+                              const Icon(Icons.content_paste, size: 18),
+                        ),
+                      ),
               ),
             ),
-            Positioned(
-              right: 12.w,
-              top: 10.h,
-              child: Container(
-                width: 6.w,
-                height: 6.w,
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  shape: BoxShape.circle,
+            SizedBox(width: 14.w),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: isLogin ? "Welcome back, $displayName" : "Welcome To ",
+                      style: FTextStyle.helloTxt,
+                    ),
+                  ],
                 ),
               ),
             ),
+            Stack(
+              children: [
+                Container(
+                  width: 40.w,
+                  height: 40.w,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.notifications_none_rounded,
+                    size: 20,
+                  ),
+                ),
+                Positioned(
+                  right: 12.w,
+                  top: 10.h,
+                  child: Container(
+                    width: 6.w,
+                    height: 6.w,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 

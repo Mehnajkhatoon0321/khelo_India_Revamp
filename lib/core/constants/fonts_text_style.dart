@@ -45,6 +45,47 @@ class FTextStyle {
     height: 1.93, // 193% line-height
     letterSpacing: 0,
   );
+
+  // Privacy policy details (minimal / editorial)
+  static TextStyle privacyDetailsHeaderTitle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16.sp,
+    height: 1.25,
+    color: AppColors.textPrimary,
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle privacyDetailsHeaderSubtitle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 13.sp,
+    height: 1.6,
+    color: AppColors.textSecondary,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle privacyDetailsSectionTitle = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 15.sp,
+    height: 1.3,
+    color: AppColors.textPrimary,
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle privacyDetailsBody = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 13.sp,
+    height: 1.75,
+    color: AppColors.textSecondary,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle privacyDetailsMeta = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 12.sp,
+    height: 1.4,
+    color: AppColors.textSecondary,
+    fontWeight: FontWeight.w600,
+  );
   static TextStyle helloTxt = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 13.sp,

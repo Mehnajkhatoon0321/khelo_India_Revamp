@@ -21,6 +21,9 @@ const List<Map<String, dynamic>> kCompetitionList = <Map<String, dynamic>>[
 
 final ValueNotifier<int> selectedCompetitionIdNotifier = ValueNotifier<int>(0);
 
+/// Controls whether stakeholder is logged in - used for home page "after login" content
+final ValueNotifier<bool> isLoginNotifier = ValueNotifier<bool>(false);
+
 String getCompetitionLabelById(int selectedId) {
   if (selectedId <= 0) return 'Select Competition';
 

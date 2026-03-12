@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gms_application/core/constants/themes_colors.dart';
+import 'package:gms_application/core/storage/shared_preference.dart';
 import 'package:gms_application/core/utils/simple_translator.dart';
+import 'package:gms_application/presentation/pages/bottom_navbar/data/competition_list_data.dart';
 import 'package:gms_application/presentation/pages/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Prefs.init();
+  isLoginNotifier.value = Prefs.getIsLogin();
 
   /// Set white status bar with black icons
   SystemChrome.setSystemUIOverlayStyle(

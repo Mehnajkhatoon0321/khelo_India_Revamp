@@ -71,6 +71,15 @@ class Prefs {
     return prefs?.getString('account_type') ?? '';
   }
 
+  // Is Login (Stakeholder)
+  static Future<void> setIsLogin(bool value) async {
+    await prefs?.setBool('isLogin', value);
+  }
+
+  static bool getIsLogin() {
+    return prefs?.getBool('isLogin') ?? false;
+  }
+
   static void setCategory(int value) {
     Prefs.prefs?.setInt('category', value);
   }
